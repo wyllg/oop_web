@@ -1,3 +1,5 @@
+// Java class that handles the logic related to saving user data and acts as a bridge between the controller and the repository
+
 package org.yl.oop_web.service;
 
 import org.yl.oop_web.model.User;
@@ -12,11 +14,8 @@ public class UserService {
         this.userRepository = userRepository;
     }
 
-    public User saveUser(User user) {
-        return userRepository.save(user);
+    public void saveUser(User user) {
+        userRepository.save(user);
     }
 
-//    public User findByUsername(String username) {
-//        return userRepository.findByUsername(username).orElse(null);
-//    }
 }
