@@ -6,9 +6,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 @Controller
 public class HomeController {
 
-    @GetMapping("/")
+    @GetMapping("/") // Sets the url
     public String home() {
-        return "home";
+        return "home"; // Returns the home.html file view
     }
 
 }
