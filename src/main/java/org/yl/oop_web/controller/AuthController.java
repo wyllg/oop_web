@@ -1,3 +1,5 @@
+// Controllers act as a bridge between the user interface and the backend logic
+
 package org.yl.oop_web.controller;
 
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -60,7 +62,14 @@ public class AuthController {
     }
 
     @GetMapping("/login")
-    public String loginForm() {
+    public String loginForm(Model model) {
+        model.addAttribute("user", new User());
         return "login";
     }
+
+    @GetMapping("/test")
+    public String testForm(Model model) {
+        return "test";
+    }
+
 }
