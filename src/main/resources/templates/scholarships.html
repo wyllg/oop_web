@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Scholarship Opportunities</title>
+  <link rel="stylesheet" href="/styles.css"> <!-- Link to your CSS file -->
+</head>
+<body>
+<header>
+  <h1>Scholarship Opportunities</h1>
+  <p>Explore various scholarship options available for students.</p>
+</header>
+
+<main>
+  <div th:each="scholarship : ${scholarships}" class="scholarship">
+    <h2 th:text="${scholarship.name}">Scholarship Name</h2>
+    <p th:text="${scholarship.description}">Description of the scholarship.</p>
+    <a th:href="${scholarship.link}" target="_blank">Apply Now</a>
+  </div>
+</main>
+
+<footer>
+  <p>&copy; 2025 Scholarship Page. All rights reserved.</p>
+</footer>
+</body>
+</html>
