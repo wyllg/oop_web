@@ -2,12 +2,11 @@
 
 package org.yl.oop_web.service;
 
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.yl.oop_web.model.CustomUserDetails;
 import org.yl.oop_web.model.User;
 import org.yl.oop_web.repository.UserRepository;
 import org.springframework.stereotype.Service;
+
+import java.util.Optional;
 
 @Service
 public class UserService {
@@ -15,6 +14,13 @@ public class UserService {
 
     public UserService(UserRepository userRepository) {
         this.userRepository = userRepository;
+    }
+
+    public Optional<User> findByUsername(String username) {
+
+        Optional<User> user = userRepository.findByUsername(username);
+
+        return userRepository.findByUsername(username);
     }
 
     public void saveUser(User user) {
