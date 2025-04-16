@@ -3,7 +3,6 @@ package org.yl.oop_web.controller;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.yl.oop_web.model.User;
 import org.yl.oop_web.service.UserService;
 
@@ -20,7 +19,7 @@ public class ProfileController {
     }
 
     @GetMapping("/profile")
-    public String profilePage(Model model, Principal principal) {
+    public String editProfileForm (Model model, Principal principal) {
         String username = principal.getName();
         Optional<User> user = userService.findByUsername(username);
 
@@ -31,6 +30,6 @@ public class ProfileController {
             return "redirect:/login?error"; // or some error page
         }
 
-        return "profile";
+        return "editprofile";
     }
 }
