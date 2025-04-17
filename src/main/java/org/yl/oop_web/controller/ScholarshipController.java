@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import java.util.List;
 
 @Controller
-@RequestMapping("/scholarships")
+@RequestMapping("/scholarships") // Base mapping updated to /scholarships
 public class ScholarshipController {
 
     @Autowired
@@ -26,7 +26,7 @@ public class ScholarshipController {
         return "scholarships"; // returns the scholarships.html template
     }
 
-    @GetMapping("/add")
+    @GetMapping("/add") // Mapping for adding a scholarship
     public String showAddScholarshipForm(Model model) {
         model.addAttribute("scholarship", new Scholarship()); // For adding a new scholarship
         return "addScholarship"; // returns the addScholarship.html template
@@ -41,7 +41,7 @@ public class ScholarshipController {
 
     @PostMapping
     public String addOrUpdateScholarship(Scholarship scholarship) {
-        scholarshipService.addScholarship(scholarship); // This method should handle both add and update
+        scholarshipService.addScholarship(scholarship); // This will handle both add and update
         return "redirect:/scholarships"; // Redirect to the scholarships page after adding/updating
     }
 }

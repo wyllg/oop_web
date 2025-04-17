@@ -21,40 +21,22 @@
     th {
         background-color: #f2f2f2;
     }
-    form {
-        margin-bottom: 20px;
+    a {
+        text-decoration: none;
+        color: blue;
     }
   </style>
 </head>
 <body>
 <h1>Scholarships</h1>
-
-<h2>Add New Scholarship</h2>
-<form action="#" th:action="@{/scholarships}" method="post" th:object="${scholarship}">
-  <div>
-    <label for="name">Name:</label>
-    <input type="text" id="name" name="name" required th:field="*{name}">
-  </div>
-  <div>
-    <label for="description">Description:</label>
-    <input type="text" id="description" name="description" required th:field="*{description}">
-  </div>
-  <div>
-    <label for="link">Link:</label>
-    <input type="url" id="link" name="link" required th:field="*{link}">
-  </div>
-  <div>
-    <button type="submit">Add Scholarship</button>
-  </div>
-</form>
-
-<h2>Available Scholarships</h2>
+<!-- Removed the Add New Scholarship button -->
 <table>
   <thead>
   <tr>
     <th>Name</th>
     <th>Description</th>
     <th>Link</th>
+    <th>Actions</th>
   </tr>
   </thead>
   <tbody>
@@ -62,6 +44,9 @@
     <td th:text="${scholarship.name}"></td>
     <td th:text="${scholarship.description}"></td>
     <td><a th:href="${scholarship.link}" th:text="${scholarship.link}"></a></td>
+    <td>
+      <a th:href="@{/scholarship/edit(id=${scholarship.id})}">Edit</a>
+    </td>
   </tr>
   </tbody>
 </table>
