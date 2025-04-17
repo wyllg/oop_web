@@ -8,7 +8,9 @@
 <h1>Edit User Profile</h1>
 
 <div>
-    <form th:action="@{/profile/edit/{username}(username=${user.username})}" th:object="${user}" method="post">
+    <form th:action="@{/profile/{username}/edit(username=${user.username})}" th:object="${user}" method="post">
+
+        <input type="hidden" name="id" th:field="*{id}" />
         <!-- First Name -->
         <div>
             <label for="firstName">First Name</label>
@@ -30,10 +32,7 @@
         <!-- Username -->
         <div>
             <label for="username">Username</label>
-            <input type="text" id="username" th:field="*{username}" required>
-            <div th:if="${#fields.hasErrors('username')}">
-                <span th:errors="*{username}"></span>
-            </div>
+            <input type="text" id="username" th:field="*{username}" readonly>
         </div>
 
         <!-- Email -->

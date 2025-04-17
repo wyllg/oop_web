@@ -1,13 +1,12 @@
 package org.yl.oop_web.controller;
 
 import jakarta.validation.Valid;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.AbstractBindingResult;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import org.yl.oop_web.model.User;
 import org.yl.oop_web.repository.UserRepository;
 import org.yl.oop_web.service.UserService;
@@ -20,11 +19,9 @@ import java.util.Optional;
 public class ProfileController {
 
     private final UserService userService;
-    private final UserRepository userRepository;
 
-    public ProfileController(UserService userService, UserRepository userRepository) {
+    public ProfileController(UserService userService) {
         this.userService = userService;
-        this.userRepository = userRepository;
     }
 
     @GetMapping("/{username}")
@@ -48,7 +45,7 @@ public class ProfileController {
 
     }
 
-    @GetMapping("/edit/{username}")
+    @GetMapping("/{username}/edit")
     public String editProfileForm (Model model, Principal principal) {
         String username = principal.getName();
         Optional<User> user = userService.findByUsername(username);
@@ -63,40 +60,39 @@ public class ProfileController {
         return "editprofile";
     }
 
-    @PostMapping("/edit/{username}")
-    public String editProfileSubmit(@PathVariable String username, @Valid User user, BindingResult result, Model model, Principal principal) {
-        Optional<User> existingUserOpt = userService.findByUsername(username);
+    @PostMapping("/{username}/edit")
+    public String editProfileSubmit(@ModelAttribute("user") User updatedUser, BindingResult result, Principal principal) {
+        String username = principal.getName();
+        User existingUser = userService.findByUsername(username)
+                .orElseThrow(() -> new UsernameNotFoundException("User not found"));
 
-        if (existingUserOpt.isEmpty()) {
-            return "test";
+        if (!principal.getName().equals(username)) {
+            return "redirect:/access-denied"; // or show error page
         }
 
-        User existingUser = existingUserOpt.get();
-
-        // Update the existing user's fields with the new values from the form
-        existingUser.setFirstName(user.getFirstName());
-        existingUser.setLastName(user.getLastName());
-        existingUser.setEmail(user.getEmail());
-        existingUser.setBio(user.getBio());
-        existingUser.setBirthday(user.getBirthday());
-        existingUser.setAddress(user.getAddress());
-        existingUser.setContactNumber(user.getContactNumber());
-
-        // Check for validation errors using Binding Result
-        if (result.hasErrors()) {
-            return "editprofile"; // Returns when there are errors present
-        }
-
-        // Check for duplicate email (excluding the current user)
-        Optional<User> userWithEmail = userRepository.findByEmail(user.getEmail());
-        if (userWithEmail.isPresent() && !userWithEmail.get().getId().equals(existingUser.getId())) {
+        // Check for duplicate email (excluding the current user's email)
+        if (!updatedUser.getEmail().equals(existingUser.getEmail()) &&
+                userService.findByEmail(updatedUser.getEmail()).isPresent()) {
             result.rejectValue("email", "error.user", "Email is already registered");
-            return "editprofile";
+            return "editprofile"; // Return to the edit profile page with an error message
         }
 
-        // Save the updated user using UserService
-        userService.saveUser(existingUser);
-        return "redirect:/profile/" + username; // Redirect to the updated profile
+        // Update required fields (they are already validated by @NotBlank)
+        existingUser.setFirstName(updatedUser.getFirstName());
+        existingUser.setLastName(updatedUser.getLastName());
+        existingUser.setEmail(updatedUser.getEmail());
 
+        // Update optional fields
+        // If the field is blank or null in the form, set it to null in the database
+        existingUser.setBio(updatedUser.getBio() != null && !updatedUser.getBio().isEmpty() ? updatedUser.getBio() : null);
+        existingUser.setBirthday(updatedUser.getBirthday()); // Birthday can be null
+        existingUser.setAddress(updatedUser.getAddress() != null && !updatedUser.getAddress().isEmpty() ? updatedUser.getAddress() : null);
+        existingUser.setContactNumber(updatedUser.getContactNumber() != null && !updatedUser.getContactNumber().isEmpty() ? updatedUser.getContactNumber() : null);
+
+        userService.saveUser(existingUser);
+
+        return "redirect:/profile/{username}";
     }
+
+
 }

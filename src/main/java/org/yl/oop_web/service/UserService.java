@@ -23,6 +23,13 @@ public class UserService {
         return userRepository.findByUsername(username);
     }
 
+    public Optional<User> findByEmail(String email) {
+
+        Optional<User> user = userRepository.findByEmail(email);
+
+        return userRepository.findByEmail(email);
+    }
+
     public void saveUser(User user) {
         userRepository.save(user);
     }

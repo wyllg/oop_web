@@ -14,7 +14,7 @@
 
 <!-- Show Edit button only if logged in user is viewing their own profile -->
 <div th:if="${isOwner}">
-    <a th:href="@{/profile/edit/{username}}" class="btn btn-primary">Edit Profile</a>
+    <a th:href="@{/profile/{username}/edit(username=${user.username})}" class="btn btn-primary">Edit Profile</a>
 </div>
 
 <a href="/">Back to Home</a>

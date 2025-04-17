@@ -34,7 +34,7 @@ public class SecurityConfig {
                 )
                 .formLogin(form -> form
                         .loginPage("/login") // Custom login page
-                        .defaultSuccessUrl("/test", true)
+                        .defaultSuccessUrl("/redirect", true)
                         .failureUrl("/login?error=true") // Handles login errors
                         .permitAll() // Allow everyone to see the login page
                 )
