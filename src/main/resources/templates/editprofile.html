@@ -1,22 +1,14 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>User Profile</title>
+    <title>Edit User Profile</title>
 </head>
 <body>
 
-<h1>User Profile</h1>
-
-<p><strong>Username:</strong> <span th:text="${user.username}">Username</span></p>
-<p><strong>Email:</strong> <span th:text="${user.email}">Email</span></p>
-<p><strong>First Name:</strong> <span th:text="${user.firstName}">First Name</span></p>
-<p><strong>Last Name:</strong> <span th:text="${user.lastName}">Last Name</span></p>
-
-<a href="/">Back to Home</a>
+<h1>Edit User Profile</h1>
 
 <div>
-    <h1>Edit Profile</h1>
-    <form th:action="@{/signup}" th:object="${user}" method="post">
+    <form th:action="@{/profile/edit/{username}(username=${user.username})}" th:object="${user}" method="post">
         <!-- First Name -->
         <div>
             <label for="firstName">First Name</label>
@@ -25,6 +17,7 @@
                 <span th:errors="*{firstName}"></span>
             </div>
         </div>
+
         <!-- Last Name -->
         <div>
             <label for="lastName">Last Name</label>
@@ -33,6 +26,7 @@
                 <span th:errors="*{lastName}"></span>
             </div>
         </div>
+
         <!-- Username -->
         <div>
             <label for="username">Username</label>
@@ -41,6 +35,7 @@
                 <span th:errors="*{username}"></span>
             </div>
         </div>
+
         <!-- Email -->
         <div>
             <label for="email">Email</label>
@@ -50,12 +45,50 @@
             </div>
         </div>
 
+        <!-- Bio -->
+        <div>
+            <label for="bio">Bio</label>
+            <textarea id="bio" th:field="*{bio}" rows="4" cols="50"></textarea>
+            <div th:if="${#fields.hasErrors('bio')}">
+                <span th:errors="*{bio}"></span>
+            </div>
+        </div>
+
+        <!-- Birthday -->
+        <div>
+            <label for="birthday">Birthday</label>
+            <input type="date" id="birthday" th:field="*{birthday}">
+            <div th:if="${#fields.hasErrors('birthday')}">
+                <span th:errors="*{birthday}"></span>
+            </div>
+        </div>
+
+        <!-- Address -->
+        <div>
+            <label for="address">Address</label>
+            <input type="text" id="address" th:field="*{address}">
+            <div th:if="${#fields.hasErrors('address')}">
+                <span th:errors="*{address}"></span>
+            </div>
+        </div>
+
+        <!-- Contact Number -->
+        <div>
+            <label for="contactNumber">Contact Number</label>
+            <input type="text" id="contactNumber" th:field="*{contactNumber}">
+            <div th:if="${#fields.hasErrors('contactNumber')}">
+                <span th:errors="*{contactNumber}"></span>
+            </div>
+        </div>
+
         <!-- Submit Button -->
         <div>
-            <button type="submit">Edit Profile</button>
+            <button type="submit">Update Profile</button>
         </div>
     </form>
 </div>
+
+<a href="/">Back to Home</a>
 
 </body>
 </html>
