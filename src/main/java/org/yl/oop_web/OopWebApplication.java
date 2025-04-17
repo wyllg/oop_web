@@ -8,10 +8,9 @@ import org.yl.oop_web.util.EnvLoader;
 public class OopWebApplication {
 
 	public static void main(String[] args) {
+		// Load .env file
 		EnvLoader.load(".env");
 		SpringApplication.run(OopWebApplication.class, args);
-
-
 	}
 
 }
