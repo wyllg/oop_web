@@ -13,15 +13,15 @@ public class ScholarshipService {
     @Autowired
     private ScholarshipRepository scholarshipRepository;
 
-    // Method to get all scholarships from the database
     public List<Scholarship> getAllScholarships() {
-        return scholarshipRepository.findAll(); // Fetch scholarships from the database
+        return scholarshipRepository.findAll();
     }
 
-    // Method to add a new scholarship
     public void addScholarship(Scholarship scholarship) {
-        scholarshipRepository.save(scholarship); // Save the scholarship to the database
+        scholarshipRepository.save(scholarship); // This will handle both add and update
     }
 
-    // Additional methods for update and delete can be added here
+    public Scholarship getScholarshipById(Long id) {
+        return scholarshipRepository.findById(id).orElse(null); // Fetch scholarship by ID
+    }
 }

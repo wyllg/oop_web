@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add/Update Scholarship</title>
+</head>
+<body>
+<h1 th:text="${scholarship.id != null} ? 'Update Scholarship' : 'Add New Scholarship'"></h1>
+<form action="#" th:action="@{/scholarships}" method="post" th:object="${scholarship}">
+    <input type="hidden" th:field="*{id}"/> <!-- Hidden field for ID -->
+
+    <label for="name">Scholarship Name:</label>
+    <input type="text" id="name" name="name" required th:field="*{name}"><br><br>
+
+    <label for="description">Description:</label>
+    <textarea id="description" name="description" required th:field="*{description}"></textarea><br><br>
+
+    <label for="link">Link:</label>
+    <input type="url" id="link" name="link" required th:field="*{link}"><br><br>
+
+    <button type="submit">Submit</button>
+</form>
+</body>
+</html>
