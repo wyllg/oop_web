@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>User Profile</title>
+</head>
+<body>
+
+<h1>User Profile</h1>
+
+<p><strong>Username:</strong> <span th:text="${user.username}">Username</span></p>
+<p><strong>Email:</strong> <span th:text="${user.email}">Email</span></p>
+<p><strong>First Name:</strong> <span th:text="${user.firstName}">First Name</span></p>
+<p><strong>Last Name:</strong> <span th:text="${user.lastName}">Last Name</span></p>
+
+<!-- Show Edit button only if logged in user is viewing their own profile -->
+<div th:if="${isOwner}">
+    <a th:href="@{/profile/edit/{username}}" class="btn btn-primary">Edit Profile</a>
+</div>
+
+<a href="/">Back to Home</a>
+</body>
+</html>
