@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Edit User Profile</title>
+</head>
+<body>
+
+<h1>Edit User Profile</h1>
+
+<div>
+    <form th:action="@{/profile/{username}/edit(username=${user.username})}" th:object="${user}" method="post">
+
+        <input type="hidden" name="id" th:field="*{id}" />
+        <div>
+            <h2>User Details</h2>
+        </div>
+        <!-- First Name -->
+        <div>
+            <label for="firstName">First Name</label>
+            <input type="text" id="firstName" th:field="*{firstName}" required>
+            <div th:if="${#fields.hasErrors('firstName')}">
+                <span th:errors="*{firstName}"></span>
+            </div>
+        </div>
+
+        <!-- Last Name -->
+        <div>
+            <label for="lastName">Last Name</label>
+            <input type="text" id="lastName" th:field="*{lastName}" required>
+            <div th:if="${#fields.hasErrors('lastName')}">
+                <span th:errors="*{lastName}"></span>
+            </div>
+        </div>
+
+        <!-- Username -->
+        <div>
+            <label for="username">Username</label>
+            <input type="text" id="username" th:field="*{username}" readonly>
+        </div>
+
+        <!-- Email -->
+        <div>
+            <label for="email">Email</label>
+            <input type="email" id="email" th:field="*{email}" required>
+            <div th:if="${#fields.hasErrors('email')}">
+                <span th:errors="*{email}"></span>
+            </div>
+        </div>
+
+        <!-- Bio -->
+        <div>
+            <label for="bio">Bio</label>
+            <textarea id="bio" th:field="*{bio}" rows="4" cols="50"></textarea>
+            <div th:if="${#fields.hasErrors('bio')}">
+                <span th:errors="*{bio}"></span>
+            </div>
+        </div>
+
+        <!-- Birthday -->
+        <div>
+            <label for="birthday">Birthday</label>
+            <input type="date" id="birthday" th:field="*{birthday}">
+            <div th:if="${#fields.hasErrors('birthday')}">
+                <span th:errors="*{birthday}"></span>
+            </div>
+        </div>
+
+        <!-- Address -->
+        <div>
+            <label for="address">Address</label>
+            <input type="text" id="address" th:field="*{address}">
+            <div th:if="${#fields.hasErrors('address')}">
+                <span th:errors="*{address}"></span>
+            </div>
+        </div>
+
+        <!-- Contact Number -->
+        <div>
+            <label for="contactNumber">Contact Number</label>
+            <input type="text" id="contactNumber" th:field="*{contactNumber}">
+            <div th:if="${#fields.hasErrors('contactNumber')}">
+                <span th:errors="*{contactNumber}"></span>
+            </div>
+        </div>
+
+        <!--Profile Picture-->
+        <div>
+            <label for="profilePicUrl">Profile Picture URL:</label>
+            <input type="url" id="profilePicUrl" th:field="*{profilePicUrl}">
+        </div>
+
+        <div>
+            <h2>Education</h2>
+        </div>
+
+        <div>
+            <label for="school">School</label>
+            <input type="text" id="school" th:field="*{school}">
+            <div th:if="${#fields.hasErrors('school')}">
+                <span th:errors="*{school}"></span>
+            </div>
+        </div>
+
+        <div>
+            <label for="degree">Degree</label>
+            <input type="text" id="degree" th:field="*{degree}">
+            <div th:if="${#fields.hasErrors('degree')}">
+                <span th:errors="*{degree}"></span>
+            </div>
+        </div>
+
+        <div>
+            <label for="fieldOfStudy">Field of Study</label>
+            <input type="text" id="fieldOfStudy" th:field="*{fieldOfStudy}">
+            <div th:if="${#fields.hasErrors('fieldOfStudy')}">
+                <span th:errors="*{fieldOfStudy}"></span>
+            </div>
+        </div>
+
+        <!-- Start Month Dropdown -->
+        <div>
+            <label for="startMonth">Start Month</label>
+            <select id="startMonth" th:field="*{startMonth}">
+                <option value="">Select Month</option> <!-- Empty option -->
+                <option th:each="month : ${months}" th:value="${month}" th:text="${month}"></option>
+            </select>
+        </div>
+
+        <!-- Start Year Dropdown -->
+        <div>
+            <label for="startYear">Start Year</label>
+            <select id="startYear" th:field="*{startYear}">
+                <option value="">Select Year</option> <!-- Empty option -->
+                <option th:each="year : ${years}" th:value="${year}" th:text="${year}"></option>
+            </select>
+        </div>
+
+        <!-- End Month Dropdown -->
+        <div>
+            <label for="endMonth">End Month</label>
+            <select id="endMonth" th:field="*{endMonth}">
+                <option value="">Select Month</option> <!-- Empty option -->
+                <option th:each="month : ${months}" th:value="${month}" th:text="${month}"></option>
+            </select>
+        </div>
+
+        <!-- End Year Dropdown -->
+        <div>
+            <label for="endYear">End Year</label>
+            <select id="endYear" th:field="*{endYear}">
+                <option value="">Select Year</option> <!-- Empty option -->
+                <option th:each="year : ${years}" th:value="${year}" th:text="${year}"></option>
+            </select>
+        </div>
+
+
+        <!-- Submit Button -->
+        <div>
+            <button type="submit">Update Profile</button>
+        </div>
+    </form>
+</div>
+
+<a href="/">Back to Home</a>
+
+</body>
+</html>

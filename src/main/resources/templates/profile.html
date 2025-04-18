@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>User Profile</title>
+</head>
+<body>
+
+<div>
+    <div>
+        <h1>User Profile</h1>
+    </div>
+
+    <div>
+        <div>
+            <img th:src="${user.profilePicUrl}" alt="Profile Picture" width="150" height="150">
+        </div>
+        <div>
+            <p><strong>Name:</strong> <span th:text="${user.firstName}">First Name</span> <span th:text="${user.lastName}">Last Name</span></p>
+        </div>
+        <div>
+            <h2>User Details</h2>
+        </div>
+        <div>
+            <p><strong>Username:</strong> <span th:text="${user.username}">Username</span></p>
+        </div>
+        <div>
+            <p><strong>Email:</strong> <span th:text="${user.email}">Email</span></p>
+        </div>
+        <div>
+            <p><strong>Bio:</strong> <span th:text="${user.bio}">Bio</span></p>
+        </div>
+        <div>
+            <p><strong>Birthday:</strong> <span th:text="${user.birthday}">Birthday</span></p>
+        </div>
+        <div>
+            <p><strong>Address:</strong> <span th:text="${user.address}">Address</span></p>
+        </div>
+        <div>
+            <p><strong>Contact Number:</strong> <span th:text="${user.contactNumber}">Contact Number</span></p>
+        </div>
+
+    </div>
+    <div>
+        <div>
+            <h2>Education</h2>
+        </div>
+        <div>
+            <p><strong>School:</strong> <span th:text="${user.school}">School</span></p>
+        </div>
+        <div>
+            <p><strong>Degree:</strong> <span th:text="${user.degree}">Degree</span></p>
+        </div>
+        <div>
+            <p><strong>Field of Study:</strong> <span th:text="${user.fieldOfStudy}">Field of Study</span></p>
+        </div>
+
+        <div>
+            <p><strong>Start:</strong>
+                <span th:text="${#strings.capitalize(user.startMonth?.toString()?.toLowerCase())}">Start Month</span>
+                <span th:text="${user.startYear}">Start Year</span>
+            </p>
+        </div>
+        <div>
+            <p><strong>End:</strong>
+                <span th:text="${#strings.capitalize(user.endMonth?.toString()?.toLowerCase())}">End Month</span>
+                <span th:text="${user.endYear}">End Year</span>
+            </p>
+        </div>
+    </div>
+
+
+    <!-- Show Edit button only if logged in user is viewing their own profile -->
+    <div th:if="${isOwner}">
+        <a th:href="@{/profile/{username}/edit(username=${user.username})}" class="btn btn-primary">Edit Profile</a>
+    </div>
+
+    <a href="/">Back to Home</a>
+</div>
+
+
+</body>
+</html>

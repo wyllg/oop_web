@@ -2,6 +2,7 @@
 
 package org.yl.oop_web.controller;
 
+import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.yl.oop_web.model.User;
 import org.yl.oop_web.service.UserService;
@@ -65,6 +66,12 @@ public class AuthController {
     public String loginForm(Model model) {
         model.addAttribute("user", new User());
         return "login";
+    }
+
+    @GetMapping("/redirect")
+    public String redirectAfterLogin(Authentication authentication) {
+        String username = authentication.getName();
+        return "redirect:/profile/" + username;
     }
 
     @GetMapping("/test")
