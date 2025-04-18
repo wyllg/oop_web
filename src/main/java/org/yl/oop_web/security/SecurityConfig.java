@@ -29,13 +29,13 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception { // This method accepts an HTTP security object
         http
                 .authorizeHttpRequests(authorize -> authorize
-                        .requestMatchers("/", "/signup", "/login" , "/scholarships").permitAll() // Allow access to these endpoints
+                        .requestMatchers("/", "/signup", "/login" , "/scholarships ","/profile/{username}").permitAll() // Allow access to these endpoints
                         .anyRequest().authenticated() // All other requests require authentication
                 )
                 .formLogin(form -> form
                         .loginPage("/login") // Custom login page
-                        .defaultSuccessUrl("/test", true)
-                        .failureUrl("/login?error=true") // Handles login errors
+                        .defaultSuccessUrl("/redirect", true)
+                        .failureUrl("/login?error") // Handles login errors
                         .permitAll() // Allow everyone to see the login page
                 )
                 .logout(LogoutConfigurer::permitAll // Allow everyone to log out

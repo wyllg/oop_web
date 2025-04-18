@@ -34,3 +34,4 @@ build/
 
 ### Password ###
 .env
+application-test.properties
