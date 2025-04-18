@@ -47,19 +47,16 @@ public class User {
     @Column(length = 255)
     private String bio;
 
-    @Past(message = "Date of birth must be in the past")
     private LocalDate birthday;
 
     @Column(length = 255)
     private String address;
 
-    @Pattern(regexp = "^\\+?[0-9]{10,15}$", message = "Invalid phone number")
     private String contactNumber;
 
     @Column(name = "profile_pic_url")
     private String profilePicUrl;
 
-    @NotBlank(message = "School is required")
     private String school;
 
     private String degree;

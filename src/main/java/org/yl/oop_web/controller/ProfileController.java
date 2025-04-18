@@ -29,7 +29,7 @@ public class ProfileController {
     @ModelAttribute("months")
     public List<String> getMonths() {
         List<String> months = new ArrayList<>();
-        months.add(""); // Add an empty option
+        months.add(null); // Add an empty option
         months.addAll(Arrays.asList("January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"));
         return months;
     }
@@ -112,7 +112,14 @@ public class ProfileController {
             return "editprofile"; // Return to the edit profile page with an error message
         }
 
+        if (updatedUser .getSchool() != null) {
+            existingUser .setSchool(updatedUser .getSchool());
+        }
 
+        // Validate the contact number
+        if (result.hasErrors()) {
+            return "editprofile"; // Return to the edit profile page with error messages
+        }
 
         // Update required fields (they are already validated by @NotBlank)
         existingUser.setFirstName(updatedUser.getFirstName());
