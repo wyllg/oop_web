@@ -74,14 +74,20 @@
             </div>
         </div>
 
-        <!-- Contact Number -->
         <div>
-            <label for="contactNumber">Contact Number</label>
-            <input type="text" id="contactNumber" th:field="*{contactNumber}">
-            <div th:if="${#fields.hasErrors('contactNumber')}">
-                <span th:errors="*{contactNumber}"></span>
-            </div>
+            <label for="contactNumber">Contact Number:</label>
+            <input type="text" id="contactNumber" th:field="*{contactNumber}" oninput="this.value = this.value.replace(/[^0-9]/g, '')" />
+            <div th:if="${#fields.hasErrors('contactNumber')}" th:errors="*{contactNumber}"></div>
         </div>
+
+        <!-- Contact Number -->
+<!--        <div>-->
+<!--            <label for="contactNumber">Contact Number</label>-->
+<!--            <input type="text" id="contactNumber" th:field="*{contactNumber}">-->
+<!--            <div th:if="${#fields.hasErrors('contactNumber')}">-->
+<!--                <span th:errors="*{contactNumber}"></span>-->
+<!--            </div>-->
+<!--        </div>-->
 
         <!--Profile Picture-->
         <div>
