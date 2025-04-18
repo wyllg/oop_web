@@ -35,7 +35,7 @@ public class SecurityConfig {
                 .formLogin(form -> form
                         .loginPage("/login") // Custom login page
                         .defaultSuccessUrl("/redirect", true)
-                        .failureUrl("/login?error=true") // Handles login errors
+                        .failureUrl("/login?error") // Handles login errors
                         .permitAll() // Allow everyone to see the login page
                 )
                 .logout(LogoutConfigurer::permitAll // Allow everyone to log out

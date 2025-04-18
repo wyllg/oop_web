@@ -11,6 +11,9 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.time.LocalDate;
+import java.time.Month;
+import java.time.Year;
+import java.util.ArrayList;
 import java.util.List;
 
 @Setter
@@ -56,13 +59,19 @@ public class User {
     @Column(name = "profile_pic_url")
     private String profilePicUrl;
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<Education> educationList;
+    @NotBlank(message = "School is required")
+    private String school;
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<Project> projectList;
+    private String degree;
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<Internship> internshipList;
+    private String fieldOfStudy;
+
+    private Month startMonth;
+
+    private Year startYear;
+
+    private Month endMonth;
+
+    private Year endYear;
 
 }

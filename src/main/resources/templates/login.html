@@ -9,7 +9,7 @@
     <h1>Login</h1>
 
     <!-- Error Message -->
-    <div th:if="${param.error}">
+    <div th:if="${param.error != null}">
         <p style="color: red;">Invalid username or password.</p>
     </div>
 

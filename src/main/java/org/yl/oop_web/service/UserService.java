@@ -2,6 +2,7 @@
 
 package org.yl.oop_web.service;
 
+import jakarta.transaction.Transactional;
 import org.yl.oop_web.model.User;
 import org.yl.oop_web.repository.UserRepository;
 import org.springframework.stereotype.Service;
@@ -30,6 +31,7 @@ public class UserService {
         return userRepository.findByEmail(email);
     }
 
+    @Transactional
     public void saveUser(User user) {
         userRepository.save(user);
     }
