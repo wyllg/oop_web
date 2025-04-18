@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Add/Update Seminar/Workshop</title>
+</head>
+<body>
+<h1 th:text="${seminarWorkshop.id != null} ? 'Update Seminar/Workshop' : 'Add New Seminar/Workshop'"></h1>
+<form action="#" th:action="@{/seminars}" method="post" th:object="${seminarWorkshop}">
+  <input type="hidden" th:field="*{id}"/> <!-- Hidden field for ID -->
+
+  <label for="title">Title:</label>
+  <input type="text" id="title" name="title" required th:field="*{title}"><br><br>
+
+  <label for="description">Description:</label>
+  <textarea id="description" name="description" required th:field="*{description}"></textarea><br><br>
+
+  <label for="date">Date:</label>
+  <input type="date" id="date" name="date" required th:field="*{date}"><br><br>
+
+  <label for="link">Link:</label>
+  <input type="url" id="link" name="link" required th:field="*{link}"><br><br>
+
+  <button type="submit">Submit</button>
+</form>
+<br>
+<a href="/seminars">Back to Seminars & Workshops List</a> <!-- Link to go back to the list -->
+</body>
+</html>
