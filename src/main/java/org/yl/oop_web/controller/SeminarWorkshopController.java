@@ -1,15 +1,16 @@
 package org.yl.oop_web.controller;
 
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import org.yl.oop_web.model.SeminarWorkshop;
 import org.yl.oop_web.service.SeminarWorkshopService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
 
 @Controller
@@ -33,7 +34,8 @@ public class SeminarWorkshopController {
     }
 
     @PostMapping
-    public String addOrUpdateSeminarWorkshop(SeminarWorkshop seminarWorkshop) {
+    public String addOrUpdateSeminarWorkshop(@ModelAttribute SeminarWorkshop seminarWorkshop) {
+        // No need to handle image upload, just save the seminar/workshop with the image link
         seminarWorkshopService.addSeminarWorkshop(seminarWorkshop); // This will handle both add and update
         return "redirect:/seminars"; // Redirect to the seminars page after adding/updating
     }

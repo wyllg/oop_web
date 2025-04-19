@@ -1,15 +1,16 @@
 package org.yl.oop_web.controller;
 
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import org.yl.oop_web.model.Scholarship;
 import org.yl.oop_web.service.ScholarshipService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
 
 @Controller
@@ -40,7 +41,8 @@ public class ScholarshipController {
     }
 
     @PostMapping
-    public String addOrUpdateScholarship(Scholarship scholarship) {
+    public String addOrUpdateScholarship(@ModelAttribute Scholarship scholarship) {
+        // No need to handle image upload, just save the scholarship with the image link
         scholarshipService.addScholarship(scholarship); // This will handle both add and update
         return "redirect:/scholarships"; // Redirect to the scholarships page after adding/updating
     }

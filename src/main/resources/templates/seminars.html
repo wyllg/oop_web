@@ -25,6 +25,12 @@
         text-decoration: none;
         color: blue;
     }
+    img {
+        width: 100px; /* Set a fixed width for images */
+        height: auto; /* Maintain aspect ratio */
+        display: block; /* Ensure the image is displayed as a block element */
+        margin-top: 5px; /* Add some space above the image */
+    }
   </style>
 </head>
 <body>
@@ -36,17 +42,17 @@
     <th>Description</th>
     <th>Date</th>
     <th>Link</th>
-    <th>Actions</th>
   </tr>
   </thead>
   <tbody>
   <tr th:each="seminarWorkshop : ${seminarsWorkshops}">
-    <td th:text="${seminarWorkshop.title}"></td>
+    <td>
+      <span th:text="${seminarWorkshop.title}"></span>
+      <img th:src="${seminarWorkshop.imagePath}" alt="Seminar Image" />
+    </td>
     <td th:text="${seminarWorkshop.description}"></td>
     <td th:text="${seminarWorkshop.date}"></td>
     <td><a th:href="${seminarWorkshop.link}" th:text="${seminarWorkshop.link}"></a></td>
-    <td>
-    </td>
   </tr>
   </tbody>
 </table>

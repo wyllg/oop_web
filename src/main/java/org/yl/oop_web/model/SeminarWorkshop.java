@@ -14,6 +14,7 @@ public class SeminarWorkshop {
     private String description;
     private String date;
     private String link;
+    private String imagePath;
 
     // Getters and Setters
     public Long getId() {
@@ -54,5 +55,13 @@ public class SeminarWorkshop {
 
     public void setLink(String link) {
         this.link = link;
+    }
+
+    public String getImagePath() {
+        return imagePath;
+    }
+
+    public void setImagePath(String link) {
+        this.imagePath = imagePath;
     }
 }
