@@ -59,7 +59,8 @@
         <!-- Birthday -->
         <div>
             <label for="birthday">Birthday</label>
-            <input type="date" id="birthday" th:field="*{birthday}">
+            <input type="date" id="birthday" th:field="*{birthday}"
+                   th:value="${#dates.format(birthday, 'yyyy-MM-dd')}" />
             <div th:if="${#fields.hasErrors('birthday')}">
                 <span th:errors="*{birthday}"></span>
             </div>
@@ -126,36 +127,44 @@
         <!-- Start Month Dropdown -->
         <div>
             <label for="startMonth">Start Month</label>
-            <select id="startMonth" th:field="*{startMonth}">
-                <option value="">Select Month</option> <!-- Empty option -->
-                <option th:each="month : ${months}" th:value="${month}" th:text="${month}"></option>
+            <select class="form-control" id="startMonth" name="startMonth" th:field="*{startMonth}">
+                <option value="" disabled selected>Select month</option>
+                <option th:each="month : ${T(java.time.Month).values()}"
+                        th:value="${month}"
+                        th:text="${#strings.capitalize(month.name().toLowerCase())}"></option>
             </select>
         </div>
 
         <!-- Start Year Dropdown -->
         <div>
             <label for="startYear">Start Year</label>
-            <select id="startYear" th:field="*{startYear}">
-                <option value="">Select Year</option> <!-- Empty option -->
-                <option th:each="year : ${years}" th:value="${year}" th:text="${year}"></option>
+            <select class="form-control" id="startYear" name="startYear" th:field="*{startYear}">
+                <option value="" disabled selected>Select year</option>
+                <option th:each="year : ${years}"
+                        th:value="${year}"
+                        th:text="${year}"></option>
             </select>
         </div>
 
         <!-- End Month Dropdown -->
         <div>
             <label for="endMonth">End Month</label>
-            <select id="endMonth" th:field="*{endMonth}">
-                <option value="">Select Month</option> <!-- Empty option -->
-                <option th:each="month : ${months}" th:value="${month}" th:text="${month}"></option>
+            <select class="form-control" id="endMonth" name="endMonth" th:field="*{endMonth}">
+                <option value="" disabled selected>Select month</option>
+                <option th:each="month : ${T(java.time.Month).values()}"
+                        th:value="${month}"
+                        th:text="${#strings.capitalize(month.name().toLowerCase())}"></option>
             </select>
         </div>
 
         <!-- End Year Dropdown -->
         <div>
             <label for="endYear">End Year</label>
-            <select id="endYear" th:field="*{endYear}">
-                <option value="">Select Year</option> <!-- Empty option -->
-                <option th:each="year : ${years}" th:value="${year}" th:text="${year}"></option>
+            <select class="form-control" id="endYear" name="endYear" th:field="*{endYear}">
+                <option value="" disabled selected>Select year</option>
+                <option th:each="year : ${years}"
+                        th:value="${year}"
+                        th:text="${year}"></option>
             </select>
         </div>
 

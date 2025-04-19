@@ -9,11 +9,16 @@ import org.yl.oop_web.model.User;
 import org.yl.oop_web.service.UserService;
 
 import java.security.Principal;
+import java.time.LocalDate;
 import java.time.Month;
+import java.time.Year;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 @Controller
 @RequestMapping("/profile")
@@ -27,27 +32,25 @@ public class ProfileController {
 
 
     @ModelAttribute("months")
-    public List<String> getMonths() {
-        List<String> months = new ArrayList<>();
-        months.add(null); // Add an empty option
-        months.addAll(Arrays.asList("January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"));
-        return months;
+    public List<Month> getMonths() {
+        return Arrays.asList(Month.values());
     }
 
     @ModelAttribute("years")
-    public List<Integer> getYears() {
-        List<Integer> years = new ArrayList<>();
-        years.add(null); // Add a null option
-        years.addAll(Arrays.asList(1999, 2000, 2001, 2002, 2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023, 2024, 2025, 2026, 2027, 2028, 2029, 2030, 2031, 2032, 2033, 2034, 2035));
+    public List<Year> getYears() {
+        List<Year> years = new ArrayList<>();
+        for (int i = 1999; i <= 2035; i++) {
+            years.add(Year.of(i));
+        }
         return years;
     }
 
-    public static String formatMonth(Month month) {
-        if (month == null) {
-            return "";
-        }
-        return month.toString().charAt(0) + month.toString().substring(1).toLowerCase();
-    }
+//    public static String formatMonth(Month month) {
+//        if (month == null) {
+//            return "";
+//        }
+//        return month.toString().charAt(0) + month.toString().substring(1).toLowerCase();
+//    }
 
 //    @ModelAttribute("months")
 //    public List<String> getMonths() {
@@ -111,6 +114,13 @@ public class ProfileController {
             result.rejectValue("email", "error.user", "Email is already registered");
             return "editprofile"; // Return to the edit profile page with an error message
         }
+
+        // Get the LocalDate from updatedUser
+        LocalDate birthday = updatedUser.getBirthday();
+
+        // Set the birthday directly without needing to convert
+        existingUser.setBirthday(birthday);
+
 
         if (updatedUser .getSchool() != null) {
             existingUser .setSchool(updatedUser .getSchool());
