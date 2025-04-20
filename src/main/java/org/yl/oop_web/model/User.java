@@ -5,16 +5,13 @@ package org.yl.oop_web.model;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Past;
-import jakarta.validation.constraints.Pattern;
 import lombok.Getter;
 import lombok.Setter;
-
+import org.springframework.format.annotation.DateTimeFormat;
 import java.time.LocalDate;
 import java.time.Month;
 import java.time.Year;
-import java.util.ArrayList;
-import java.util.List;
+
 
 @Setter
 @Getter
@@ -47,6 +44,7 @@ public class User {
     @Column(length = 255)
     private String bio;
 
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate birthday;
 
     @Column(length = 255)
@@ -54,7 +52,7 @@ public class User {
 
     private String contactNumber;
 
-    @Column(name = "profile_pic_url")
+    @Column(length = 600)
     private String profilePicUrl;
 
     private String school;
