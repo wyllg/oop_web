@@ -1,16 +1,15 @@
 package org.yl.oop_web.controller;
 
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
+import org.yl.oop_web.model.Application;
 import org.yl.oop_web.model.SeminarWorkshop;
+import org.yl.oop_web.service.ApplicationService;
 import org.yl.oop_web.service.SeminarWorkshopService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.multipart.MultipartFile;
 
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.List;
 
 @Controller
@@ -19,6 +18,9 @@ public class SeminarWorkshopController {
 
     @Autowired
     private SeminarWorkshopService seminarWorkshopService;
+
+    @Autowired
+    private ApplicationService applicationService;
 
     @GetMapping
     public String getAllSeminarsWorkshops(Model model) {
@@ -35,7 +37,6 @@ public class SeminarWorkshopController {
 
     @PostMapping
     public String addOrUpdateSeminarWorkshop(@ModelAttribute SeminarWorkshop seminarWorkshop) {
-        // No need to handle image upload, just save the seminar/workshop with the image link
         seminarWorkshopService.addSeminarWorkshop(seminarWorkshop); // This will handle both add and update
         return "redirect:/seminars"; // Redirect to the seminars page after adding/updating
     }
@@ -45,5 +46,18 @@ public class SeminarWorkshopController {
         SeminarWorkshop seminarWorkshop = seminarWorkshopService.getSeminarWorkshopById(id);
         model.addAttribute("seminarWorkshop", seminarWorkshop); // For updating an existing seminar/workshop
         return "addSeminarWorkshop"; // returns the addSeminarWorkshop.html template
+    }
+
+    @PostMapping("/apply") // New method to handle applications
+    public String applyForSeminar(@RequestParam Long seminarId) {
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+        SeminarWorkshop seminarWorkshop = seminarWorkshopService.getSeminarWorkshopById(seminarId);
+
+        Application application = new Application();
+        application.setUsername(username);
+        application.setSeminarWorkshop(seminarWorkshop);
+
+        applicationService.apply(application); // Save the application
+        return "redirect:/seminars"; // Redirect to the seminars page after applying
     }
 }
