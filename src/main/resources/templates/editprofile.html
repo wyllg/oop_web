@@ -41,10 +41,7 @@
         <!-- Email -->
         <div>
             <label for="email">Email</label>
-            <input type="email" id="email" th:field="*{email}" required>
-            <div th:if="${#fields.hasErrors('email')}">
-                <span th:errors="*{email}"></span>
-            </div>
+            <input type="email" id="email" th:field="*{email}" readonly>
         </div>
 
         <!-- Bio -->
