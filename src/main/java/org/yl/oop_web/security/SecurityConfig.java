@@ -4,7 +4,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.config.annotation.web.configurers.LogoutConfigurer;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
@@ -29,16 +28,18 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception { // This method accepts an HTTP security object
         http
                 .authorizeHttpRequests(authorize -> authorize
-                        .requestMatchers("/", "/signup", "/login" , "/scholarships ","/profile/{username}").permitAll() // Allow access to these endpoints
+                        .requestMatchers("/", "/signup", "/login" , "/scholarships","/profile/{username}", "/landing", "/static/**").permitAll() // Allow access to these endpoints
                         .anyRequest().authenticated() // All other requests require authentication
                 )
                 .formLogin(form -> form
                         .loginPage("/login") // Custom login page
-                        .defaultSuccessUrl("/redirect", true)
+                        .defaultSuccessUrl("/landing", true)
                         .failureUrl("/login?error") // Handles login errors
                         .permitAll() // Allow everyone to see the login page
                 )
-                .logout(LogoutConfigurer::permitAll // Allow everyone to log out
+                .logout(logout -> logout
+                        .logoutSuccessUrl("/") // Redirect to login page with a logout message
+                        .permitAll()
                 );
 
         return http.build();

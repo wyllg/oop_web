@@ -14,6 +14,9 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import java.security.Principal;
+import java.util.Optional;
+
 @Controller
 public class AuthController {
 
@@ -68,10 +71,28 @@ public class AuthController {
         return "login";
     }
 
-    @GetMapping("/redirect")
-    public String redirectAfterLogin(Authentication authentication) {
-        String username = authentication.getName();
-        return "redirect:/profile/" + username;
+//    @GetMapping("/landing")
+//    public String redirectAfterLogin(Authentication authentication) {
+//        String username = authentication.getName();
+//        return "landing";
+//    }
+
+    @GetMapping("/landing")
+    public String home(Model model, Principal principal) {
+        if (principal != null) {
+            String username = principal.getName();
+            Optional<User> user = userService.findByUsername(username);
+
+            if (user.isPresent()) {
+                model.addAttribute("isOwner", true);
+                model.addAttribute("user", user.get()); // Assuming you have a User class
+            } else {
+                model.addAttribute("isOwner", false);
+            }
+        } else {
+            model.addAttribute("isOwner", false);
+        }
+        return "landing";
     }
 
     @GetMapping("/test")
