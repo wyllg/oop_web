@@ -1,82 +1,245 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>User Profile</title>
+    <title>Profile | TITLE</title>
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+<!--    <link rel="stylesheet" href="profile-style.css">-->
 </head>
 <body>
-
-<div>
-    <div>
-        <h1>User Profile</h1>
-    </div>
-
-    <div>
-        <div>
-            <img th:src="${user.profilePicUrl}" alt="Profile Picture" width="150" height="150">
-        </div>
-        <div>
-            <p><strong>Name:</strong> <span th:text="${user.firstName}">First Name</span> <span th:text="${user.lastName}">Last Name</span></p>
-        </div>
-        <div>
-            <h2>User Details</h2>
-        </div>
-        <div>
-            <p><strong>Username:</strong> <span th:text="${user.username}">Username</span></p>
-        </div>
-        <div>
-            <p><strong>Email:</strong> <span th:text="${user.email}">Email</span></p>
-        </div>
-        <div>
-            <p><strong>Bio:</strong> <span th:text="${user.bio}">Bio</span></p>
-        </div>
-        <div>
-            <p><strong>Birthday:</strong> <span th:text="${user.birthday}">Birthday</span></p>
-        </div>
-        <div>
-            <p><strong>Address:</strong> <span th:text="${user.address}">Address</span></p>
-        </div>
-        <div>
-            <p><strong>Contact Number:</strong> <span th:text="${user.contactNumber}">Contact Number</span></p>
+<div class="container">
+    <div class="card">
+        <div class="profile">
+            <div class="profile-picture">
+                <div class="circular-container">
+                    <img th:src="${user.profilePicUrl}" alt="Profile Picture" width="150" height="150">
+<!--                    <img src="dp.jpeg" alt="Profile Picture">-->
+                </div>
+            </div>
+            <h1 class="user-title">User Profile</h1>
+            <hr>
         </div>
 
-    </div>
-    <div>
-        <div>
+        <div class="card-section">
+            <h2>Personal Info</h2>
+            <div class="info-pair">
+                <label>Name:</label>
+                <div class="info-value">
+                    <span th:text="${user.firstName}">First Name</span>
+                    <span th:text="${user.lastName}">Last Name</span>
+                </div>
+            </div>
+            <div class="info-pair">
+                <label>Username:</label>
+                <span class="info-value" th:text="${user.username}">Username</span>
+            </div>
+            <div class="info-pair">
+                <label>Email:</label>
+                <span class="info-value" th:text="${user.email}">Email</span>
+            </div>
+            <div class="info-pair">
+                <label>Birthday:</label>
+                <span class="info-value" th:text="${user.birthday}">Birthday</span>
+            </div>
+            <div class="info-pair">
+                <label>Contact:</label>
+                <span class="info-value" th:text="${user.contactNumber}">Contact Number</span>
+            </div>
+            <div class="info-pair">
+                <label>Address:</label>
+                <span class="info-value" th:text="${user.address}">Address</span>
+            </div>
+            <div class="info-pair">
+                <label>Bio:</label>
+                <div class="info-value" th:text="${user.bio}">Bio</div>
+            </div>
+        </div>
+        <hr>
+        <div class="card-section">
             <h2>Education</h2>
-        </div>
-        <div>
-            <p><strong>School:</strong> <span th:text="${user.school}">School</span></p>
-        </div>
-        <div>
-            <p><strong>Degree:</strong> <span th:text="${user.degree}">Degree</span></p>
-        </div>
-        <div>
-            <p><strong>Field of Study:</strong> <span th:text="${user.fieldOfStudy}">Field of Study</span></p>
+            <div class="info-pair">
+                <label>School:</label>
+                <span class="info-value" th:text="${user.school}">School</span>
+            </div>
+            <div class="info-pair">
+                <label>Degree:</label>
+                <span class="info-value" th:text="${user.degree}">Degree</span>
+            </div>
+            <div class="info-pair">
+                <label>Field of Study:</label>
+                <span class="info-value" th:text="${user.fieldOfStudy}">Field</span>
+            </div>
+            <div class="info-pair">
+                <label>Start:</label>
+                <span class="info-value">
+                        <span th:text="${#strings.capitalize(user.startMonth?.toString()?.toLowerCase())}">Start Month</span>
+                        <span th:text="${user.startYear}">Start Year</span>
+                    </span>
+            </div>
+            <div class="info-pair">
+                <label>End:</label>
+                <span class="info-value">
+                        <span th:text="${#strings.capitalize(user.endMonth?.toString()?.toLowerCase())}">End Month</span>
+                        <span th:text="${user.endYear}">End Year</span>
+                    </span>
+            </div>
         </div>
 
-        <div>
-            <p><strong>Start:</strong>
-                <span th:text="${#strings.capitalize(user.startMonth?.toString()?.toLowerCase())}">Start Month</span>
-                <span th:text="${user.startYear}">Start Year</span>
-            </p>
-        </div>
-        <div>
-            <p><strong>End:</strong>
-                <span th:text="${#strings.capitalize(user.endMonth?.toString()?.toLowerCase())}">End Month</span>
-                <span th:text="${user.endYear}">End Year</span>
-            </p>
+        <div class="card-buttons">
+            <div class="editbutton" th:if="${isOwner}">
+                <a th:href="@{/profile/{username}/edit(username=${user.username})}" class="btn">Edit Profile</a>
+            </div>
+            <div class="home">
+                <a href="/" class="btn-outline">Back to Home</a>
+            </div>
         </div>
     </div>
-
-
-    <!-- Show Edit button only if logged in user is viewing their own profile -->
-    <div th:if="${isOwner}">
-        <a th:href="@{/profile/{username}/edit(username=${user.username})}" class="btn btn-primary">Edit Profile</a>
-    </div>
-
-    <a href="/">Back to Home</a>
 </div>
-
-
 </body>
 </html>
+
+
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Raleway:wght@300;400;600&display=swap');
+
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: 'Raleway', sans-serif;
+    }
+
+    body {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 100vh;
+        background: linear-gradient(to top, hsla(229, 100%, 50%, 0.822), rgba(255, 255, 255, 0.75), hsla(229, 100%, 50%, 0.822)),
+        url("scholarship.jpeg");
+        padding: 20px;
+    }
+
+    .container {
+        width: 100%;
+        max-width: 1000px;
+        padding: 20px;
+    }
+
+    .card {
+        background: white;
+        border-radius: 16px;
+        padding: 30px;
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5);
+    }
+
+    .profile {
+        text-align: center;
+        margin-bottom: 20px;
+    }
+
+    .user-title {
+        font-size: 24px;
+        font-weight: 600;
+        margin-top: 15px;
+    }
+
+    hr {
+        border: none;
+        height: 4px;
+        background-color: #000000;
+        margin: 15px 0;
+        border-radius: 2px;
+    }
+
+    .circular-container {
+        width: 150px;
+        height: 150px;
+        border-radius: 50%;
+        overflow: hidden;
+        margin: 0 auto;
+        border: 3px solid #ddd;
+        box-shadow: 0 0 15px rgba(0,0,0,0.15);
+    }
+
+    .circular-container img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        object-position: center;
+    }
+
+    .card-section {
+        margin-top: 30px;
+        padding: 20px;
+        background: #f9f9f9;
+        border-radius: 12px;
+        box-shadow: inset 0 0 4px rgba(150, 150, 150, 0.2);
+    }
+
+    .card-section h2 {
+        font-size: 20px;
+        font-weight: 600;
+        margin-bottom: 15px;
+        text-align: center;
+    }
+
+    .info-pair {
+        margin-bottom: 16px;
+    }
+
+    label {
+        display: block;
+        font-weight: 600;
+        color: #444;
+        margin-bottom: 6px;
+        text-align: left;
+    }
+
+    .info-value {
+        color: #333;
+        font-size: 16px;
+        line-height: 1.5;
+        text-align: center;
+        word-break: break-word;
+        white-space: normal;
+        width: 100%;
+        display: block;
+    }
+
+    .card-buttons {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 25px;
+    }
+
+    .btn, .btn-outline {
+        text-decoration: none;
+        padding: 10px 20px;
+        border-radius: 8px;
+        font-weight: 600;
+        transition: all 0.3s ease;
+        text-align: center;
+    }
+
+    .btn {
+        color: rgb(0, 0, 0);
+        border: 2px solid #0041a3;
+    }
+
+    .btn:hover {
+        background-color: #0041a3;
+        color:white;
+    }
+
+    .btn-outline {
+        border: 2px solid #0041a3;
+        color: rgb(0, 0, 0);
+        background-color: transparent;
+    }
+
+    .btn-outline:hover {
+        background-color: #0041a3;
+        color: white;
+    }
+
+</style>
+
