@@ -14,4 +14,11 @@ public class ApplicationService {
     public void apply(Application application) {
         applicationRepository.save(application);
     }
+
+    // New method to check if the user has already applied for the seminar/workshop
+    public boolean hasApplied(String username, Long seminarWorkshopId) {
+        return applicationRepository.findAll().stream()
+                .anyMatch(application -> application.getUsername().equals(username) &&
+                        application.getSeminarWorkshop().getId().equals(seminarWorkshopId));
+    }
 }

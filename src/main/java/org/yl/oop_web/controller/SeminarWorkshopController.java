@@ -1,14 +1,15 @@
 package org.yl.oop_web.controller;
 
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 import org.yl.oop_web.model.Application;
 import org.yl.oop_web.model.SeminarWorkshop;
 import org.yl.oop_web.service.ApplicationService;
 import org.yl.oop_web.service.SeminarWorkshopService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
 
@@ -48,10 +49,16 @@ public class SeminarWorkshopController {
         return "addSeminarWorkshop"; // returns the addSeminarWorkshop.html template
     }
 
-    @PostMapping("/apply") // New method to handle applications
-    public String applyForSeminar(@RequestParam Long seminarId) {
+    @PostMapping("/apply") // Method to handle applications
+    public String applyForSeminar(@RequestParam Long seminarId, RedirectAttributes redirectAttributes) {
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
         SeminarWorkshop seminarWorkshop = seminarWorkshopService.getSeminarWorkshopById(seminarId);
+
+        // Check if the user has already applied for this seminar/workshop
+        if (applicationService.hasApplied(username, seminarId)) {
+            redirectAttributes.addFlashAttribute("error", "You have already applied for this seminar/workshop.");
+            return "redirect:/seminars"; // Redirect to the seminars page with an error message
+        }
 
         Application application = new Application();
         application.setUsername(username);
