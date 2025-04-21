@@ -25,28 +25,32 @@
         text-decoration: none;
         color: blue;
     }
+    img {
+        width: 100px; /* Set a fixed width for images */
+        height: auto; /* Maintain aspect ratio */
+        display: block; /* Ensure the image is displayed as a block element */
+        margin-top: 5px; /* Add some space above the image */
+    }
   </style>
 </head>
 <body>
 <h1>Scholarships</h1>
-<!-- Removed the Add New Scholarship button -->
 <table>
   <thead>
   <tr>
     <th>Name</th>
     <th>Description</th>
     <th>Link</th>
-    <th>Actions</th>
   </tr>
   </thead>
   <tbody>
   <tr th:each="scholarship : ${scholarships}">
-    <td th:text="${scholarship.name}"></td>
+    <td>
+      <span th:text="${scholarship.name}"></span>
+      <img th:src="${scholarship.imagePath}" alt="Scholarship Image" />
+    </td>
     <td th:text="${scholarship.description}"></td>
     <td><a th:href="${scholarship.link}" th:text="${scholarship.link}"></a></td>
-    <td>
-      <a th:href="@{/scholarship/edit(id=${scholarship.id})}">Edit</a>
-    </td>
   </tr>
   </tbody>
 </table>
