@@ -13,7 +13,7 @@ body {
     align-items: center;
     min-height: 100vh;
     background: linear-gradient(to top, rgba(255, 255, 255, 0.75), rgba(206, 81, 255, 0.75)),
-    url("harvard.jpeg");
+    url('https://images.unsplash.com/photo-1527891751199-7225231a68dd?fm=jpg&q=60&w=3000&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8c2Nob29sJTIwY2FtcHVzfGVufDB8fDB8fHww');
     background-repeat: no-repeat;
     background-size: cover;
     border-bottom: 30px solid purple;
