@@ -19,7 +19,6 @@ public class Scholarship {
     private String name;
     private String description;
     private String link;
-    private String imagePath;
 
     @ManyToOne
     @JoinColumn(name = "user_id")
@@ -30,6 +29,5 @@ public class Scholarship {
         this.name = name;
         this.description = description;
         this.link = link;
-        this.imagePath = "https://i.imgur.com/0000000.png";
     }
 }
