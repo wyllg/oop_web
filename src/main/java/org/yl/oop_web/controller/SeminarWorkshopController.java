@@ -54,6 +54,12 @@ public class SeminarWorkshopController {
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
         SeminarWorkshop seminarWorkshop = seminarWorkshopService.getSeminarWorkshopById(seminarId);
 
+        // Check if the seminar workshop exists
+        if (seminarWorkshop == null) {
+            redirectAttributes.addFlashAttribute("error", "Seminar/Workshop not found.");
+            return "redirect:/seminars"; // Redirect to the seminars page with an error message
+        }
+
         // Check if the user has already applied for this seminar/workshop
         if (applicationService.hasApplied(username, seminarId)) {
             redirectAttributes.addFlashAttribute("error", "You have already applied for this seminar/workshop.");
