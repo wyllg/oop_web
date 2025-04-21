@@ -1,62 +1,200 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sign Up</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Signup | TITLE</title>
+    <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="signup-style.css" />
 </head>
 <body>
-<div>
-    <h1>Sign Up</h1>
-    <form th:action="@{/signup}" th:object="${user}" method="post">
-        <!-- First Name -->
-        <div>
-            <label for="firstName">First Name</label>
-            <input type="text" id="firstName" th:field="*{firstName}" required>
-            <div th:if="${#fields.hasErrors('firstName')}">
-                <span th:errors="*{firstName}"></span>
+<div class="container">
+
+    <!-- Left: Registration Form -->
+    <div class="form-section">
+        <form th:action="@{/signup}" th:object="${user}" method="post">
+            <h1>Registration</h1>
+
+            <!-- First Name -->
+            <div class="input-box">
+                <input type="text" id="firstname" th:field="*{firstName}" placeholder="First Name" required />
+                <div th:if="${#fields.hasErrors('firstName')}">
+                    <span th:errors="*{firstName}"></span>
+                </div>
             </div>
-        </div>
-        <!-- Last Name -->
-        <div>
-            <label for="lastName">Last Name</label>
-            <input type="text" id="lastName" th:field="*{lastName}" required>
-            <div th:if="${#fields.hasErrors('lastName')}">
-                <span th:errors="*{lastName}"></span>
+
+            <!-- Last Name -->
+            <div class="input-box">
+                <input type="text" id="lastname" th:field="*{lastName}" placeholder="Last Name" required />
+                <div th:if="${#fields.hasErrors('lastName')}">
+                    <span th:errors="*{lastName}"></span>
+                </div>
             </div>
-        </div>
-        <!-- Username -->
-        <div>
-            <label for="username">Username</label>
-            <input type="text" id="username" th:field="*{username}" required>
-            <div th:if="${#fields.hasErrors('username')}">
-                <span th:errors="*{username}"></span>
+
+            <!-- Username -->
+            <div class="input-box">
+                <input type="text" id="username" th:field="*{username}" placeholder="Username" required />
+                <i class='bx bxs-user'></i>
+                <div th:if="${#fields.hasErrors('username')}">
+                    <span th:errors="*{username}"></span>
+                </div>
             </div>
-        </div>
-        <!-- Email -->
-        <div>
-            <label for="email">Email</label>
-            <input type="email" id="email" th:field="*{email}" required>
-            <div th:if="${#fields.hasErrors('email')}">
-                <span th:errors="*{email}"></span>
+
+            <!-- Email -->
+            <div class="input-box">
+                <input type="email" id="email" th:field="*{email}" placeholder="Email" required />
+                <i class='bx bx-envelope'></i>
+                <div th:if="${#fields.hasErrors('email')}">
+                    <span th:errors="*{email}"></span>
+                </div>
             </div>
-        </div>
-        <!-- Password -->
-        <div>
-            <label for="password">Password</label>
-            <input type="password" id="password" th:field="*{password}" required>
-            <div th:if="${#fields.hasErrors('password')}">
-                <span th:errors="*{password}"></span>
+
+            <!-- Password -->
+            <div class="input-box">
+                <input type="password" id="password" th:field="*{password}" placeholder="Password" required />
+                <i class='bx bxs-lock-alt'></i>
+                <div th:if="${#fields.hasErrors('password')}">
+                    <span th:errors="*{password}"></span>
+                </div>
             </div>
-        </div>
-        <!-- Submit Button -->
-        <div>
-            <button type="submit">Sign Up</button>
-        </div>
-    </form>
-    <div>
-        <p>Already have an account? <a th:href="@{/login}">Login here</a></p>
+
+            <!-- Submit Button -->
+            <button type="submit" class="btn">Register</button>
+        </form>
     </div>
+
+    <!-- Right: Blue Panel -->
+    <div class="panel-section">
+        <h1>Welcome Back!</h1>
+        <p>Already have an account?</p>
+        <a th:href="@{/login}"><button class="btn outline">Login</button></a>
+    </div>
+
 </div>
 </body>
 </html>
+
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Raleway:wght@400;600&display=swap');
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Raleway', sans-serif;
+}
+
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background: linear-gradient(to top, rgba(255,255,255,0.85), #0066ff);
+}
+
+.container {
+  display: flex;
+  width: 850px;
+  height: 520px;
+  background: #fff;
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 0 30px rgba(0, 0, 0, .1);
+}
+
+/* Form Section */
+.form-section {
+  flex: 1;
+  padding: 60px 40px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+form h1 {
+  text-align: center;
+  font-size: 32px;
+  margin-bottom: 20px;
+  color: #333;
+}
+
+.input-box {
+  position: relative;
+  margin-bottom: 20px;
+}
+
+.input-box input {
+  width: 100%;
+  padding: 12px 20px;
+  padding-right: 45px;
+  background: #f0f0f0;
+  border: none;
+  border-radius: 10px;
+  font-size: 16px;
+  outline: none;
+}
+
+.input-box i {
+  position: absolute;
+  right: 15px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 18px;
+  color: #888;
+}
+
+.btn {
+  width: 100%;
+  padding: 12px;
+  background: #0066ff;
+  border: none;
+  border-radius: 8px;
+  color: #fff;
+  font-weight: 600;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.btn:hover {
+  background: #004bb5;
+}
+
+/* Panel Section */
+.panel-section {
+  flex: 1;
+  background: #0066ff;
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 40px;
+  text-align: center;
+}
+
+.panel-section h1 {
+  font-size: 30px;
+  margin-bottom: 10px;
+}
+
+.panel-section p {
+  font-size: 16px;
+  margin-bottom: 20px;
+}
+
+.btn.outline {
+    width: 160px;
+    height: 46px;
+    background: transparent;
+    border: 2px solid #fff;
+}
+
+.btn.outline:hover {
+    width: 160px;
+    height: 46px;
+    background: #fff;
+    color: #0066ff;
+}
+
+</style>

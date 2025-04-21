@@ -2,13 +2,127 @@
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Home Page</title>
+    <title>Home | TITLE</title>
 </head>
-<body>
-<h1>Welcome to the Home Page</h1>
-<p>Click below to go to the signup page:</p>
-<a href="/signup">Sign Up</a><br>
-<p>Already have an account? <a href="/login">Login</a></p>
-</body>
+<div class="welcome">
+    <h1>Welcome To The Home Page</h1>
+    <div class="sign-up">
+        <a>Click the button below to proceed to sign-up</a>
+<!--        <a href="/signup">Sign Up</a><br>-->
+    </div>
+     <button type="button" class="btn" onclick="window.location.href='/signup'" id="signupBtn" aria-label="Sign Up">Sign Up</button>
+
+    <div class="login">
+        Already have an account?
+        <a class="login-link" id="loginLink" onclick="window.location.href='/login'" aria-label="Login">Login</a>
+    </div>
+    <script>
+        document.getElementById('signupBtn').addEventListener('click', function() {
+            window.location.href = '/signup';
+        });
+    </script>
+</div>
 </html>
+
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100..900;1,100..900&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Raleway', sans-serif;
+}
+
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background: linear-gradient(to top, rgba(255, 255, 255, 0.75), hsla(229, 100%, 50%, 0.822)),
+    url([[@{/harvard.jpeg}]]);
+    background-repeat: no-repeat;
+    background-size: cover;
+    border-bottom: 30px solid #0041a3;
+}
+
+.welcome {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    height: 100%;
+}
+
+.welcome h1 {
+    font-size: 90px;
+    padding-bottom: 15px;
+    text-align: center;
+}
+
+.login {
+    margin-top: 20px;
+}
+
+.sign-up {
+    text-align: center;
+    margin-bottom: 20px;
+    font-size: 25px;
+}
+
+.btn {
+    height: 70px;
+    width: 200px;
+    align-items: center;
+    font-size: 25px;
+    padding: 15px 30px;
+    background-color: #0066ff;
+    opacity: 89;
+    box-shadow: 0 0 30px rgba(0, 0, 0, .2);
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    border-radius: 50px;
+    transition:
+    background-color 0.25s ease-in,
+    height 0.25s ease-in,
+    width 0.25s ease-in,
+    font-size 0.25s ease-in;
+}
+
+.btn:hover {
+    background-color:  #0041a3;
+    opacity: 100%;
+    height:80px;
+    width: 300px;
+    font-size: 35px;
+    transition:
+    background-color 0.25s ease-in,
+    height 0.25s ease-in,
+    width 0.25s ease-in,
+    font-size 0.25s ease-in;
+}
+
+.login {
+    font-size: 20px;
+}
+
+.login-link {
+    text-shadow: 2px 2px 4px rgba(112, 112, 112, 0.5);
+    font-weight: bold;
+    color: #0066ff;
+    text-decoration: none;
+    transition: font-size 0.4s ease-in, color 0.4s ease-in;
+}
+
+.login-link:hover {
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 25px;
+    color: #0041a3;
+}
+</style>

@@ -1,0 +1,88 @@
+@import url('https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100..900;1,100..900&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Raleway', sans-serif;
+}
+
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background: linear-gradient(to top, rgba(255, 255, 255, 0.75), rgba(206, 81, 255, 0.75)),
+    url("harvard.jpeg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    border-bottom: 30px solid purple;
+}
+
+.welcome {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    height: 100%;
+}
+
+.welcome h1 {
+    font-size: 90px;
+    padding-bottom: 15px;
+    text-align: center;
+}
+
+.login {
+    margin-top: 20px;
+}
+
+.sign-up {
+    text-align: center;
+    margin-bottom: 20px;
+    font-size: 25px;
+}
+
+.btn {
+    height: 70px;
+    width: 200px;
+    align-items: center;
+    font-size: 25px;
+    padding: 15px 30px;
+    background-color: #22bbcf;
+    opacity: 89;
+    box-shadow: 0 0 30px rgba(0, 0, 0, .2);
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    border-radius: 50px;
+    transition: background-color 0.4s ease-out, height 0.4s ease-out, width 0.4s ease-out, font-size 0.4s ease-out;
+}
+
+.btn:hover {
+    background-color:  #7d1ab6b2;
+    opacity: 100%;
+    height:80px;
+    width: 300px;
+    font-size: 35px;
+    transition: background-color 0.4s ease-in, height 0.4s ease-in, width 0.4s ease-in, font-size 0.4s ease-in;
+}
+
+.login {
+    font-size: 20px;
+}
+
+.login-link {
+    font-weight: bold;
+    color: #3052e7;
+    text-decoration: none;
+    transition: font-size 0.4s ease-in, color 0.4s ease-in;
+}
+
+.login-link:hover {
+    font-weight: bold;
+    font-size: 25px;
+    color: #7712b1b2;
+}

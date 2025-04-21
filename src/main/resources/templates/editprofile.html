@@ -2,178 +2,284 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>Edit User Profile</title>
+<!--    <link rel="stylesheet" href="edit-profile-style.css">-->
+    <script>
+        function previewImage() {
+            const input = document.getElementById('profilePicUrl');
+            const preview = document.getElementById('imagePreview');
+            const url = input.value.trim();
+            if (url) {
+                preview.src = url;
+                preview.style.display = 'block';
+            } else {
+                preview.style.display = 'none';
+            }
+        }
+    </script>
 </head>
 <body>
+<div class="container">
+    <div class="card">
+        <h1 class="form-title">Edit User Profile</h1>
+        <hr>
+        <form th:action="@{/profile/{username}/edit(username=${user.username})}" th:object="${user}" method="post">
 
-<h1>Edit User Profile</h1>
+            <input type="hidden" name="id" th:field="*{id}" />
 
-<div>
-    <form th:action="@{/profile/{username}/edit(username=${user.username})}" th:object="${user}" method="post">
+            <div class="form-section">
+                <h2>User Details</h2>
 
-        <input type="hidden" name="id" th:field="*{id}" />
-        <div>
-            <h2>User Details</h2>
-        </div>
-        <!-- First Name -->
-        <div>
-            <label for="firstName">First Name</label>
-            <input type="text" id="firstName" th:field="*{firstName}" required>
-            <div th:if="${#fields.hasErrors('firstName')}">
-                <span th:errors="*{firstName}"></span>
+                <!-- First Name -->
+                <div class="form-group">
+                    <label for="firstName">First Name</label>
+                    <input type="text" id="firstName" th:field="*{firstName}" required>
+                </div>
+
+                <!-- Last Name -->
+                <div class="form-group">
+                    <label for="lastName">Last Name</label>
+                    <input type="text" id="lastName" th:field="*{lastName}" required>
+                </div>
+
+                <!-- Username -->
+                <div class="form-group">
+                    <label for="username">Username</label>
+                    <input type="text" id="username" th:field="*{username}" readonly>
+                </div>
+
+                <!-- Email -->
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" th:field="*{email}" required>
+                </div>
+
+                <!-- Bio -->
+                <div class="form-group">
+                    <label for="bio">Bio</label>
+                    <textarea id="bio" th:field="*{bio}" rows="4"></textarea>
+                </div>
+
+                <!-- Birthday -->
+                <div class="form-group">
+                    <label for="birthday">Birthday</label>
+                    <input type="date" id="birthday" th:field="*{birthday}">
+                </div>
+
+                <!-- Address -->
+                <div class="form-group">
+                    <label for="address">Address</label>
+                    <input type="text" id="address" th:field="*{address}">
+                </div>
+                <div class="form-group">
+                    <label for="contactNumber">Contact Number</label>
+                    <input type="text" id="contactNumber" th:field="*{contactNumber}" oninput="this.value = this.value.replace(/[^0-9]/g, '')">
+                </div>
+                <!-- Contact Number -->
+                <!--        <div>-->
+                <!--            <label for="contactNumber">Contact Number</label>-->
+                <!--            <input type="text" id="contactNumber" th:field="*{contactNumber}">-->
+                <!--            <div th:if="${#fields.hasErrors('contactNumber')}">-->
+                <!--                <span th:errors="*{contactNumber}"></span>-->
+                <!--            </div>-->
+                <!--        </div>-->
+
+                <!--Profile Picture-->
+                <div class="form-group">
+                    <label for="profilePicUrl">Profile Picture URL</label>
+                    <input type="url" id="profilePicUrl" th:field="*{profilePicUrl}" oninput="previewImage()">
+                    <img id="imagePreview" src="" alt="Image Preview" style="display:none; max-width: 200px; margin-top: 10px; border-radius: 10px; box-shadow: 0 0 10px rgba(0,0,0,0.1);">
+                </div>
             </div>
-        </div>
 
-        <!-- Last Name -->
-        <div>
-            <label for="lastName">Last Name</label>
-            <input type="text" id="lastName" th:field="*{lastName}" required>
-            <div th:if="${#fields.hasErrors('lastName')}">
-                <span th:errors="*{lastName}"></span>
+            <div class="form-section">
+                <h2>Education</h2>
+                <div class="form-group">
+                    <label for="school">School</label>
+                    <input type="text" id="school" th:field="*{school}">
+                </div>
+                <div class="form-group">
+                    <label for="degree">Degree</label>
+                    <input type="text" id="degree" th:field="*{degree}">
+                </div>
+                <div class="form-group">
+                    <label for="fieldOfStudy">Field of Study</label>
+                    <input type="text" id="fieldOfStudy" th:field="*{fieldOfStudy}">
+                </div>
+
+                <!-- Start Month Dropdown -->
+                <div class="form-group">
+                    <label for="startMonth">Start Month</label>
+                    <select id="startMonth" th:field="*{startMonth}">
+                        <option value="">Select Month</option>
+                        <option th:each="month : ${months}" th:value="${month}" th:text="${month}"></option>
+                    </select>
+                </div>
+
+                <!-- Start Year Dropdown -->
+                <div class="form-group">
+                    <label for="startYear">Start Year</label>
+                    <select id="startYear" th:field="*{startYear}">
+                        <option value="">Select Year</option>
+                        <option th:each="year : ${years}" th:value="${year}" th:text="${year}"></option>
+                    </select>
+                </div>
+
+                <!-- End Month Dropdown -->
+                <div class="form-group">
+                    <label for="endMonth">End Month</label>
+                    <select id="endMonth" th:field="*{endMonth}">
+                        <option value="">Select Month</option>
+                        <option th:each="month : ${months}" th:value="${month}" th:text="${month}"></option>
+                    </select>
+                </div>
+
+                <!-- End Year Dropdown -->
+                <div class="form-group">
+                    <label for="endYear">End Year</label>
+                    <select id="endYear" th:field="*{endYear}">
+                        <option value="">Select Year</option>
+                        <option th:each="year : ${years}" th:value="${year}" th:text="${year}"></option>
+                    </select>
+                </div>
             </div>
-        </div>
 
-        <!-- Username -->
-        <div>
-            <label for="username">Username</label>
-            <input type="text" id="username" th:field="*{username}" readonly>
-        </div>
-
-        <!-- Email -->
-        <div>
-            <label for="email">Email</label>
-            <input type="email" id="email" th:field="*{email}" readonly>
-        </div>
-
-        <!-- Bio -->
-        <div>
-            <label for="bio">Bio</label>
-            <textarea id="bio" th:field="*{bio}" rows="4" cols="50"></textarea>
-            <div th:if="${#fields.hasErrors('bio')}">
-                <span th:errors="*{bio}"></span>
+            <!-- Submit Button -->
+            <div class="form-actions">
+                <button type="submit" class="btn">Update Profile</button>
+                <a href="/" class="btn-outline">Back to Home</a>
             </div>
-        </div>
-
-        <!-- Birthday -->
-        <div>
-            <label for="birthday">Birthday</label>
-            <input type="date" id="birthday" th:field="*{birthday}"
-                   th:value="${#dates.format(birthday, 'yyyy-MM-dd')}" />
-            <div th:if="${#fields.hasErrors('birthday')}">
-                <span th:errors="*{birthday}"></span>
-            </div>
-        </div>
-
-        <!-- Address -->
-        <div>
-            <label for="address">Address</label>
-            <input type="text" id="address" th:field="*{address}">
-            <div th:if="${#fields.hasErrors('address')}">
-                <span th:errors="*{address}"></span>
-            </div>
-        </div>
-
-        <div>
-            <label for="contactNumber">Contact Number:</label>
-            <input type="text" id="contactNumber" th:field="*{contactNumber}" oninput="this.value = this.value.replace(/[^0-9]/g, '')" />
-            <div th:if="${#fields.hasErrors('contactNumber')}" th:errors="*{contactNumber}"></div>
-        </div>
-
-        <!-- Contact Number -->
-<!--        <div>-->
-<!--            <label for="contactNumber">Contact Number</label>-->
-<!--            <input type="text" id="contactNumber" th:field="*{contactNumber}">-->
-<!--            <div th:if="${#fields.hasErrors('contactNumber')}">-->
-<!--                <span th:errors="*{contactNumber}"></span>-->
-<!--            </div>-->
-<!--        </div>-->
-
-        <!--Profile Picture-->
-        <div>
-            <label for="profilePicUrl">Profile Picture URL:</label>
-            <input type="url" id="profilePicUrl" th:field="*{profilePicUrl}">
-        </div>
-
-        <div>
-            <h2>Education</h2>
-        </div>
-
-        <div>
-            <label for="school">School</label>
-            <input type="text" id="school" th:field="*{school}">
-            <div th:if="${#fields.hasErrors('school')}">
-                <span th:errors="*{school}"></span>
-            </div>
-        </div>
-
-        <div>
-            <label for="degree">Degree</label>
-            <input type="text" id="degree" th:field="*{degree}">
-            <div th:if="${#fields.hasErrors('degree')}">
-                <span th:errors="*{degree}"></span>
-            </div>
-        </div>
-
-        <div>
-            <label for="fieldOfStudy">Field of Study</label>
-            <input type="text" id="fieldOfStudy" th:field="*{fieldOfStudy}">
-            <div th:if="${#fields.hasErrors('fieldOfStudy')}">
-                <span th:errors="*{fieldOfStudy}"></span>
-            </div>
-        </div>
-
-        <!-- Start Month Dropdown -->
-        <div>
-            <label for="startMonth">Start Month</label>
-            <select class="form-control" id="startMonth" name="startMonth" th:field="*{startMonth}">
-                <option value="" disabled selected>Select month</option>
-                <option th:each="month : ${T(java.time.Month).values()}"
-                        th:value="${month}"
-                        th:text="${#strings.capitalize(month.name().toLowerCase())}"></option>
-            </select>
-        </div>
-
-        <!-- Start Year Dropdown -->
-        <div>
-            <label for="startYear">Start Year</label>
-            <select class="form-control" id="startYear" name="startYear" th:field="*{startYear}">
-                <option value="" disabled selected>Select year</option>
-                <option th:each="year : ${years}"
-                        th:value="${year}"
-                        th:text="${year}"></option>
-            </select>
-        </div>
-
-        <!-- End Month Dropdown -->
-        <div>
-            <label for="endMonth">End Month</label>
-            <select class="form-control" id="endMonth" name="endMonth" th:field="*{endMonth}">
-                <option value="" disabled selected>Select month</option>
-                <option th:each="month : ${T(java.time.Month).values()}"
-                        th:value="${month}"
-                        th:text="${#strings.capitalize(month.name().toLowerCase())}"></option>
-            </select>
-        </div>
-
-        <!-- End Year Dropdown -->
-        <div>
-            <label for="endYear">End Year</label>
-            <select class="form-control" id="endYear" name="endYear" th:field="*{endYear}">
-                <option value="" disabled selected>Select year</option>
-                <option th:each="year : ${years}"
-                        th:value="${year}"
-                        th:text="${year}"></option>
-            </select>
-        </div>
-
-
-        <!-- Submit Button -->
-        <div>
-            <button type="submit">Update Profile</button>
-        </div>
-    </form>
+        </form>
+    </div>
 </div>
-
-<a href="/">Back to Home</a>
-
 </body>
 </html>
+
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Raleway:wght@300;400;600&display=swap');
+
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: 'Raleway', sans-serif;
+    }
+
+    body {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 100vh;
+        background: linear-gradient(to top, hsla(229, 100%, 50%, 0.822), rgba(255, 255, 255, 0.75), hsla(229, 100%, 50%, 0.822)),
+        url("scholarship.jpeg");
+        padding: 20px;
+    }
+
+    .container {
+        width: 100%;
+        max-width: 1000px;
+        padding: 20px;
+    }
+
+    .card {
+        background: rgb(255, 255, 255);
+        border-radius: 16px;
+        padding: 30px;
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5);
+    }
+
+    .form-title {
+        text-align: center;
+        font-size: 24px;
+        font-weight: 600;
+        margin-bottom: 10px;
+    }
+
+    hr {
+        border: none;
+        height: 4px;
+        background-color: #000000;
+        margin: 15px 0;
+        border-radius: 2px;
+    }
+
+    .form-section {
+        margin-top: 20px;
+    }
+
+    .form-section h2 {
+        font-size: 20px;
+        font-weight: 600;
+        margin-bottom: 15px;
+        border-bottom: 1px solid #ccc;
+        padding-bottom: 5px;
+    }
+
+    .form-group {
+        margin-bottom: 15px;
+        display: flex;
+        flex-direction: column;
+    }
+
+    label {
+        font-weight: 600;
+        color: #000000;
+        margin-bottom: 5px;
+    }
+
+    input[type="text"],
+    input[type="email"],
+    input[type="date"],
+    input[type="url"],
+    select,
+    textarea {
+        padding: 10px 15px;
+        border: 1px solid #9e9e9e;
+        border-radius: 8px;
+        font-size: 16px;
+        background-color: #f9f9f9;
+        resize: vertical;
+    }
+
+    textarea {
+        min-height: 100px;
+    }
+
+    .form-actions {
+        margin-top: 30px;
+        display: flex;
+        justify-content: space-between;
+    }
+
+    .btn, .btn-outline {
+        text-decoration: none;
+        padding: 10px 20px;
+        border-radius: 8px;
+        font-weight: 600;
+        transition: all 0.3s ease;
+        text-align: center;
+        cursor: pointer;
+        border: none;
+    }
+
+    .btn {
+        color: rgb(0, 0, 0);
+        border: 2px solid #0041a3;
+        font-size: 16px;
+    }
+
+    .btn:hover {
+        background-color: #0041a3;
+        color:white;
+    }
+
+    .btn-outline {
+        border: 2px solid #0041a3;
+        color: rgb(0, 0, 0);
+        background-color: transparent;
+    }
+
+    .btn-outline:hover {
+        background-color: #0041a3;
+        color: white;
+    }
+</style>
