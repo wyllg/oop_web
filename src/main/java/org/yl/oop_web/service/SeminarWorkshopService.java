@@ -17,11 +17,19 @@ public class SeminarWorkshopService {
         return seminarWorkshopRepository.findAll();
     }
 
+    public SeminarWorkshop getSeminarWorkshopById(Long id) {
+        return seminarWorkshopRepository.findById(id).orElse(null);
+    }
+
     public void addSeminarWorkshop(SeminarWorkshop seminarWorkshop) {
         seminarWorkshopRepository.save(seminarWorkshop);
     }
 
-    public SeminarWorkshop getSeminarWorkshopById(Long id) {
-        return seminarWorkshopRepository.findById(id).orElse(null);
+    public void updateSeminarWorkshop(SeminarWorkshop seminarWorkshop) {
+        seminarWorkshopRepository.save(seminarWorkshop);
+    }
+
+    public void deleteSeminarWorkshop(Long id) {
+        seminarWorkshopRepository.deleteById(id);
     }
 }
