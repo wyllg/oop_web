@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>Add Seminar/Workshop</title>
+</head>
+<body>
+<h1>Add Seminar/Workshop</h1>
+<form action="#" th:action="@{/seminars}" th:object="${seminarWorkshop}" method="post">
+  <label for="title">Title:</label>
+  <input type="text" id="title" name="title" required th:field="*{title}"><br><br>
+
+  <label for="description">Description:</label>
+  <textarea id="description" name="description" required th:field="*{description}"></textarea><br><br>
+
+  <label for="date">Date:</label>
+  <input type="date" id="date" name="date" required th:field="*{date}"><br><br>
+
+  <label for="link">Link:</label>
+  <input type="url" id="link" name="link" required th:field="*{link}"><br><br>
+
+  <label for="imageLink">Image Link:</label>
+  <input type="url" id="imageLink" name="imageLink" required th:field="*{imagePath}"><br><br>
+
+  <button type="submit">Submit</button>
+</form>
+<br>
+<a href="/seminars">Back to Seminars List</a>
+</body>
+</html>
