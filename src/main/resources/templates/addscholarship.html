@@ -2,25 +2,164 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>Add Scholarship</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Raleway:wght@400;700&display=swap');
+
+        * {
+          box-sizing: border-box;
+        }
+
+        body {
+          font-family: 'Raleway', sans-serif;
+          background-color: #f0f2f5;
+          margin: 0;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          height: 100vh;
+          background: linear-gradient(to top, hsla(229, 100%, 50%, 0.822), rgba(255, 255, 255, 0.75), hsla(229, 100%, 50%, 0.822)),
+          url("https://media.cnn.com/api/v1/images/stellar/prod/200701174417-university-of-washington-campus-aerial.jpg?q=w_1600,h_1167,x_0,y_0,c_fill");
+          background-size: cover;
+          background-repeat: no-repeat;
+          padding: 20px;
+          position: relative;
+        }
+
+        .form-container {
+          background-color: white;
+          padding: 30px 40px;
+          border-radius: 12px;
+          box-shadow: 0 6px 16px rgba(0, 0, 0, 0.5);
+          width: 100%;
+          max-width: 700px;
+          max-height: 900px;
+        }
+
+        h1 {
+          font-size: 40px;
+          text-align: center;
+          color: #333;
+          margin-bottom: 25px;
+        }
+
+        label {
+          font-weight: 600;
+          margin-bottom: 6px;
+          display: block;
+          color: #333;
+        }
+
+        input[type="text"],
+        input[type="url"],
+        textarea {
+          width: 100%;
+          padding: 10px;
+          border-radius: 6px;
+          border: 1px solid #ccc;
+          margin-bottom: 20px;
+          font-size: 14px;
+        }
+
+        textarea {
+          resize: vertical;
+          min-height: 100px;
+        }
+
+        button {
+          width: 100%;
+          padding: 12px;
+          font-size: 15px;
+          font-weight: bold;
+          background-color: #0065d1;
+          color: white;
+          border: none;
+          border-radius: 25px;
+          cursor: pointer;
+          transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+          background-color: #0056b3;
+        }
+
+        .back-link {
+          text-align: center;
+          display: block;
+          margin-top: 20px;
+          color: #0050a7;
+          text-decoration: none;
+          font-size: 14px;
+        }
+
+        .back-link:hover {
+          text-decoration: underline;
+        }
+
+        .image-preview {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-top: 10px;
+          }
+
+        .image-preview span {
+           font-size: 14px;
+           color: #333;
+           margin-bottom: 5px;
+        }
+
+        .image-preview img {
+           max-width: 80%;
+           max-height: 200px;
+           border: 1px solid #ccc;
+           border-radius: 8px;
+           display: none;
+        }
+
+    </style>
 </head>
 <body>
-<h1>Add Scholarship</h1>
-<form action="#" th:action="@{/scholarships}" th:object="${scholarship}" method="post">
-    <label for="name">Name:</label>
-    <input type="text" id="name" name="name" required th:field="*{name}"><br><br>
 
-    <label for="description">Description:</label>
-    <textarea id="description" name="description" required th:field="*{description}"></textarea><br><br>
+<div class="form-container">
+    <h1>Add Scholarship</h1>
+    <form action="#" th:action="@{/scholarships}" th:object="${scholarship}" method="post">
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="name" required th:field="*{name}">
 
-    <label for="link">Link:</label>
-    <input type="url" id="link" name="link" required th:field="*{link}"><br><br>
+        <label for="description">Description:</label>
+        <textarea id="description" name="description" required th:field="*{description}"></textarea>
 
-    <label for="imageLink">Image Link:</label>
-    <input type="url" id="imageLink" name="imageLink" required th:field="*{imagePath}"><br><br>
+        <label for="link">Link:</label>
+        <input type="url" id="link" name="link" required th:field="*{link}">
 
-    <button type="submit">Submit</button>
-</form>
-<br>
-<a href="/scholarships">Back to Scholarships List</a>
+        <label for="imageLink">Image Link:</label>
+        <input type="url" id="imageLink" name="imageLink" required th:field="*{imagePath}" oninput="updatePreview()">
+
+        <div class="image-preview">
+            <img id="previewImage" src="" alt="Image Preview">
+        </div>
+
+        <br>
+        <button type="submit"></i> Submit</button>
+    </form>
+
+    <a href="/scholarships" class="back-link"><i class="fas fa-arrow-left"></i> Back to Scholarships List</a>
+</div>
+
+<script>
+    function updatePreview() {
+      const input = document.getElementById('imageLink');
+      const img = document.getElementById('previewImage');
+      if (input.value.trim() !== '') {
+        img.src = input.value;
+        img.style.display = 'block';
+      } else {
+        img.src = '';
+        img.style.display = 'none';
+      }
+    }
+</script>
+
 </body>
 </html>

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Profile | TITLE</title>
+    <title>Profile</title>
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
 <!--    <link rel="stylesheet" href="profile-style.css">-->
 </head>
@@ -89,7 +89,7 @@
                 <a th:href="@{/profile/{username}/edit(username=${user.username})}" class="btn">Edit Profile</a>
             </div>
             <div class="home">
-                <a href="/" class="btn-outline">Back to Home</a>
+                <a href="/landing" class="btn-outline">Back to Home</a>
             </div>
         </div>
     </div>
@@ -114,8 +114,11 @@
         justify-content: center;
         min-height: 100vh;
         background: linear-gradient(to top, hsla(229, 100%, 50%, 0.822), rgba(255, 255, 255, 0.75), hsla(229, 100%, 50%, 0.822)),
-        url("scholarship.jpeg");
+        url("https://scontent.fmnl4-3.fna.fbcdn.net/v/t1.6435-9/139466517_3933817309996138_4067968884375821737_n.jpg?_nc_cat=110&ccb=1-7&_nc_sid=127cfc&_nc_eui2=AeHnyW3FmLGyTLkeM3qI1XZaBG8fZPW05YIEbx9k9bTlghxUu6QnlpsyS8iM4-CDt_l6agKb5No8aYGVn281WKhW&_nc_ohc=USPX37UEr5sQ7kNvwFdFiA_&_nc_oc=Adne1IIVQEyodHe17xUOK7ZsLB1BY-6GESINprNA3LuimG6fYW4NourIfM1vOXeDMB8&_nc_zt=23&_nc_ht=scontent.fmnl4-3.fna&_nc_gid=WBmRE5lNuhb6d_JQmlzOJg&oh=00_AfEGx13Wl95Q35W-7wgQGQFQ5MAibC2w_5XCTsKnsaXZsA&oe=682F1B8E");
+        background-size: cover;
+        background-repeat: no-repeat;
         padding: 20px;
+        position: relative;
     }
 
     .container {
@@ -151,8 +154,8 @@
     }
 
     .circular-container {
-        width: 150px;
-        height: 150px;
+        width: 200px;
+        height: 200px;
         border-radius: 50%;
         overflow: hidden;
         margin: 0 auto;

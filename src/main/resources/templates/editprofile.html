@@ -87,7 +87,9 @@
                 <div class="form-group">
                     <label for="profilePicUrl">Profile Picture URL</label>
                     <input type="url" id="profilePicUrl" th:field="*{profilePicUrl}" oninput="previewImage()">
-                    <img id="imagePreview" src="" alt="Image Preview" style="display:none; max-width: 200px; margin-top: 10px; border-radius: 10px; box-shadow: 0 0 10px rgba(0,0,0,0.1);">
+                    <div class="image-preview-container">
+                        <img id="imagePreview" src="" alt="Image Preview">
+                    </div>
                 </div>
             </div>
 
@@ -146,7 +148,7 @@
             <!-- Submit Button -->
             <div class="form-actions">
                 <button type="submit" class="btn">Update Profile</button>
-                <a href="/" class="btn-outline">Back to Home</a>
+                <a href="/landing" class="btn-outline">Back to Home</a>
             </div>
         </form>
     </div>
@@ -170,8 +172,11 @@
         justify-content: center;
         min-height: 100vh;
         background: linear-gradient(to top, hsla(229, 100%, 50%, 0.822), rgba(255, 255, 255, 0.75), hsla(229, 100%, 50%, 0.822)),
-        url("scholarship.jpeg");
+        url("https://scontent.fmnl4-1.fna.fbcdn.net/v/t1.6435-9/139263790_3933817696662766_8906842451947658520_n.jpg?_nc_cat=111&ccb=1-7&_nc_sid=127cfc&_nc_eui2=AeHVsweOX-zW5SE7tYuj010sfkAq2Do1A2l-QCrYOjUDaeotdmXPSCpPx9k9FH6rq8UKfut4hqLkreS-J2h9qAhk&_nc_ohc=kJUiDfBIDWMQ7kNvwGrdeYn&_nc_oc=Adkfm20n_plELBY9IWOMb8uJAdHTQpR8ncYGQNl28Ja1qyz7oyNbKww38F7SV8MRG6c&_nc_zt=23&_nc_ht=scontent.fmnl4-1.fna&_nc_gid=Ond-5rRL1_6V4ebaaKbClg&oh=00_AfEDplwZ4dSvUotRFSFgIbYTeIZH2iH0YbgIoejkN8qM8w&oe=682F08F5");
+        background-size: cover;
+        background-repeat: no-repeat;
         padding: 20px;
+        position: relative;
     }
 
     .container {
@@ -281,5 +286,18 @@
     .btn-outline:hover {
         background-color: #0041a3;
         color: white;
+    }
+
+    .image-preview-container {
+        display: flex;
+        justify-content: center;
+        margin-top: 10px;
+    }
+
+    #imagePreview {
+        display: none;
+        max-width: 200px;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0,0,0,0.1);
     }
 </style>
