@@ -1,29 +1,52 @@
 package org.yl.oop_web.controller;
 
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 import org.yl.oop_web.model.Scholarship;
+import org.yl.oop_web.model.User;
+import org.yl.oop_web.repository.UserRepository;
 import org.yl.oop_web.service.ScholarshipService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.multipart.MultipartFile;
+import org.yl.oop_web.service.UserService;
 
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
+import java.security.Principal;
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 @RequestMapping("/scholarships") // Base mapping updated to /scholarships
 public class ScholarshipController {
 
+    private final UserService userService;
+
+    public ScholarshipController(UserService userService, UserRepository userRepository, PasswordEncoder passwordEncoder) {
+        this.userService = userService;
+    }
+
     @Autowired
     private ScholarshipService scholarshipService;
 
     @GetMapping
-    public String getAllScholarships(Model model) {
+    public String getAllScholarships(Model model, Principal principal) {
         List<Scholarship> scholarships = scholarshipService.getAllScholarships();
         model.addAttribute("scholarships", scholarships);
+
+        if (principal != null) {
+            String username = principal.getName();
+            Optional<User> user = userService.findByUsername(username);
+
+            if (user.isPresent()) {
+                model.addAttribute("isOwner", true);
+                model.addAttribute("user", user.get()); // Assuming you have a User class
+            } else {
+                model.addAttribute("isOwner", false);
+            }
+        } else {
+            model.addAttribute("isOwner", false);
+        }
+
         return "scholarships"; // returns the scholarships.html template
     }
 

@@ -153,12 +153,19 @@
 </head>
 <body>
 
+
+<!--Navbar-->
 <nav>
   <a href="/landing">Home</a>
-  <a href="/profile">Profile</a>
-<!--  <a th:if="${isAdmin}" href="/addSeminarWorkshop">Add Seminars / Workshops</a>-->
-  <a href="/seminars/add">Add Seminars / Workshops</a>
-  <form th:action="@{/logout}" method="post" style="display: inline;">
+
+  <!-- Show profile link only if user is logged in, if not logged in it shows login link -->
+  <a th:if="${user != null}" th:href="@{/profile/{username}(username=${user.username})}" class="btn">Profile</a>
+  <a th:if="${user == null}" th:href="@{/login}" class="btn">Login</a>
+
+  <a href="/scholarships">Scholarships</a>
+
+  <!-- Show logout only if user is logged in -->
+  <form th:if="${user != null}" th:action="@{/logout}" method="post">
     <button type="submit" class="nav-link-button">Logout</button>
   </form>
 </nav>
@@ -179,13 +186,15 @@
           <a th:href="${seminarWorkshop.link}" target="_blank">Link</a>
         </div>
         <div class="description" th:text="${seminarWorkshop.description}">Description</div>
-        <div style="text-align: center; margin-top: 10px;">
-          <form th:action="@{/seminars/apply}" method="post">
-            <input type="hidden" name="seminarId" th:value="${seminarWorkshop.id}" />
-            <button type="submit" class="apply-button">
-              Apply
-            </button>
-          </form>
+        <div th:if="${isOwner}">
+          <div style="text-align: center; margin-top: 10px;">
+            <form th:action="@{/seminars/apply}" method="post">
+              <input type="hidden" name="seminarId" th:value="${seminarWorkshop.id}" />
+              <button type="submit" class="apply-button">
+                Apply
+              </button>
+            </form>
+          </div>
         </div>
       </div>
     </div>

@@ -139,16 +139,22 @@
 </head>
 <body>
 
-<!-- Navbar -->
+<!--Navbar-->
 <nav>
   <a href="/landing">Home</a>
-  <a href="/profile">Profile</a>
-<!--  <a th:if="${isAdmin}" href="/addscholarship">Add Scholarships</a>-->
-  <a href="/scholarships/add">Add Scholarships</a>
-  <form th:action="@{/logout}" method="post">
+
+  <!-- Show profile link only if user is logged in, if not logged in it shows login link -->
+  <a th:if="${user != null}" th:href="@{/profile/{username}(username=${user.username})}" class="btn">Profile</a>
+  <a th:if="${user == null}" th:href="@{/login}" class="btn">Login</a>
+
+  <a href="/seminars">Seminars</a>
+
+  <!-- Show logout only if user is logged in -->
+  <form th:if="${user != null}" th:action="@{/logout}" method="post">
     <button type="submit">Logout</button>
   </form>
 </nav>
+
 
 <h1>Scholarships</h1>
 
@@ -163,11 +169,6 @@
           <a th:href="${scholarship.link}" target="_blank">Link</a>
         </div>
         <div class="description" th:text="${scholarship.description}">Description</div>
-        <div class="actions">
-          <a th:href="@{/scholarship/edit(id=${scholarship.id})}">
-            <i class="fas fa-edit"></i> Edit
-          </a>
-        </div>
       </div>
     </div>
   </div>

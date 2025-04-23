@@ -28,7 +28,7 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception { // This method accepts an HTTP security object
         http
                 .authorizeHttpRequests(authorize -> authorize
-                        .requestMatchers("/", "/signup", "/login" , "/scholarships","/profile/{username}", "/landing", "/static/**").permitAll() // Allow access to these endpoints
+                        .requestMatchers("/", "/signup", "/login" , "/scholarships", "/seminars", "/profile/{username}", "/landing", "/static/**").permitAll() // Allow access to these endpoints
                         .anyRequest().authenticated() // All other requests require authentication
                 )
                 .formLogin(form -> form

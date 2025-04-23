@@ -1,8 +1,11 @@
 package org.yl.oop_web.controller;
 
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 import org.yl.oop_web.model.Application;
 import org.yl.oop_web.model.SeminarWorkshop;
+import org.yl.oop_web.model.User;
+import org.yl.oop_web.repository.UserRepository;
 import org.yl.oop_web.service.ApplicationService;
 import org.yl.oop_web.service.SeminarWorkshopService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,12 +13,21 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.yl.oop_web.service.UserService;
 
+import java.security.Principal;
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 @RequestMapping("/seminars") // Base mapping for seminars
 public class SeminarWorkshopController {
+
+    private final UserService userService;
+
+    public SeminarWorkshopController(UserService userService, UserRepository userRepository, PasswordEncoder passwordEncoder) {
+        this.userService = userService;
+    }
 
     @Autowired
     private SeminarWorkshopService seminarWorkshopService;
@@ -24,9 +36,24 @@ public class SeminarWorkshopController {
     private ApplicationService applicationService;
 
     @GetMapping
-    public String getAllSeminarsWorkshops(Model model) {
+    public String getAllSeminarsWorkshops(Model model, Principal principal) {
         List<SeminarWorkshop> seminarsWorkshops = seminarWorkshopService.getAllSeminarsWorkshops();
         model.addAttribute("seminarsWorkshops", seminarsWorkshops);
+
+        if (principal != null) {
+            String username = principal.getName();
+            Optional<User> user = userService.findByUsername(username);
+
+            if (user.isPresent()) {
+                model.addAttribute("isOwner", true);
+                model.addAttribute("user", user.get()); // Assuming you have a User class
+            } else {
+                model.addAttribute("isOwner", false);
+            }
+        } else {
+            model.addAttribute("isOwner", false);
+        }
+
         return "seminars"; // returns the seminars.html template
     }
 
