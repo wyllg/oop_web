@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Add Internship</title>
+</head>
+<body>
+<h1>Add Internship</h1>
+
+<form action="#" th:action="@{/internships}" th:object="${internship}" method="post">
+    <label for="title">Title:</label>
+    <input type="text" id="title" name="title" required th:field="*{title}"><br><br>
+
+    <label for="description">Description:</label>
+    <textarea id="description" name="description" required th:field="*{description}"></textarea><br><br>
+
+    <label for="company">Company:</label>
+    <input type="text" id="company" name="company" required th:field="*{company}"><br><br>
+
+    <label for="location">Location:</label>
+    <input type="text" id="location" name="location" required th:field="*{location}"><br><br>
+
+    <label for="link">Application Link:</label>
+    <input type="url" id="link" name="link" required th:field="*{link}"><br><br>
+
+    <label for="imagePath">Image Link:</label>
+    <input type="url" id="imagePath" name="imagePath" required th:field="*{imagePath}"><br><br>
+
+    <button type="submit">Submit</button>
+</form>
+
+<br>
+<a href="/internships">Back to Internships List</a>
+</body>
+</html>
