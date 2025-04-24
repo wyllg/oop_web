@@ -25,14 +25,14 @@ public class InternshipController {
 
     @GetMapping("/add")
     public String showAddInternshipForm(Model model) {
-        model.addAttribute("internship", new Internship());
+        model.addAttribute("internships", new Internship());
         return "addInternship"; // returns addInternship.html
     }
 
     @GetMapping("/edit")
     public String showEditInternshipForm(@RequestParam Long id, Model model) {
         Internship internship = internshipService.getInternshipById(id);
-        model.addAttribute("internship", internship);
+        model.addAttribute("internships", internship);
         return "addInternship";
     }
 
