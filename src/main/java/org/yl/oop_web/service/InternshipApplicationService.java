@@ -17,9 +17,9 @@ public class InternshipApplicationService {
     }
 
     // Method to check if the user has already applied for the internship
-    public boolean hasApplied(String username, Long internshipId) {
+    public boolean hasApplied(String username, Long internshipsId) {
         return internshipApplicationRepository.findAll().stream()
                 .anyMatch(application -> application.getUsername().equals(username) &&
-                        application.getInternship().getId().equals(internshipId));
+                        application.getInternship().getId().equals(internshipsId));
     }
 }
