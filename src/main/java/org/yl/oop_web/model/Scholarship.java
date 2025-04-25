@@ -17,8 +17,10 @@ public class Scholarship {
     private Long id;
 
     private String name;
+    @Column(length = 3000)
     private String description;
     private String link;
+    @Column(length = 600)
     private String imagePath;
 
     @ManyToOne
