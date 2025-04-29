@@ -41,4 +41,13 @@ public class InternshipController {
         internshipService.addInternship(internship);
         return "redirect:/internships";
     }
+
+    // Endpoint to manually add internships via controller (for testing purposes)
+    @GetMapping("/add-dummy")
+    public String addDummyInternships() {
+        internshipService.addInternship(new Internship("Internship 1", "Company 1", "Description for Internship 1", "http://link1.com"));
+        internshipService.addInternship(new Internship("Internship 2", "Company 2", "Description for Internship 2", "http://link2.com"));
+        internshipService.addInternship(new Internship("Internship 3", "Company 3", "Description for Internship 3", "http://link3.com"));
+        return "redirect:/internships";
+    }
 }

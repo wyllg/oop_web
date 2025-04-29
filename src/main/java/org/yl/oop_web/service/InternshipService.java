@@ -13,14 +13,17 @@ public class InternshipService {
     @Autowired
     private InternshipRepository internshipRepository;
 
+    // Get all internships
     public List<Internship> getAllInternships() {
         return internshipRepository.findAll();
     }
 
+    // Add or update an internship
     public void addInternship(Internship internship) {
         internshipRepository.save(internship); // Handles both add and update
     }
 
+    // Get internship by ID
     public Internship getInternshipById(Long id) {
         return internshipRepository.findById(id).orElse(null); // Fetch internship by ID
     }
