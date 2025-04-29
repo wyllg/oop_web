@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Landing Page - Advice Section</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <style>
+    body {
+        font-family: Arial, sans-serif;
+        margin: 20px;
+    }
+    .advice-section {
+        margin-top: 40px;
+    }
+    .advice-form input, .advice-form textarea {
+        width: 100%;
+        padding: 10px;
+        margin: 10px 0;
+    }
+    .advice-list {
+        margin-top: 20px;
+    }
+    .advice-list div {
+        margin-bottom: 20px;
+        padding: 15px;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+    }
+  </style>
+</head>
+<body>
+<h1>Leading Innovations, Transforming Lives</h1>
+<h2>Advice Section</h2>
+
+<!-- Advice Form -->
+<div class="advice-section">
+  <h3>Submit Your Advice</h3>
+  <form class="advice-form" action="/advice/submit" method="POST">
+    <input type="text" name="name" placeholder="Your Name" required>
+    <textarea name="content" rows="4" placeholder="Your Advice" required></textarea>
+    <button type="submit">Submit</button>
+  </form>
+</div>
+
+<!-- List of Advice -->
+<div class="advice-list">
+  <h3>Advice from Others</h3>
+  <div>
+    <!-- Assuming the data is passed as a list of advice objects -->
+    <div>
+      <h4>John Doe</h4>
+      <p>Always believe in yourself!</p>
+    </div>
+    <div>
+      <h4>Jane Smith</h4>
+      <p>Hard work pays off in the end.</p>
+    </div>
+  </div>
+</div>
+</body>
+</html>
