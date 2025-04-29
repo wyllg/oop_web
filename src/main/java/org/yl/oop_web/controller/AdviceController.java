@@ -14,18 +14,18 @@ public class AdviceController {
     @Autowired
     private AdviceService adviceService;
 
-    // Show the form to submit advice
+    // Show the advice form and list of all advice
     @GetMapping
     public String showAdviceForm(Model model) {
-        model.addAttribute("advice", new Advice()); // Empty advice form
-        model.addAttribute("advices", adviceService.getAllAdvices()); // Show all advice submissions
-        return "landing"; // Return the landing page
+        model.addAttribute("advice", new Advice()); // New advice object for the form
+        model.addAttribute("advices", adviceService.getAllAdvices()); // List of all advice
+        return "advice"; //
     }
 
-    // Handle the form submission
+    // Handle form submission
     @PostMapping("/submit")
     public String submitAdvice(@ModelAttribute Advice advice) {
         adviceService.addAdvice(advice);
-        return "redirect:/advice"; // Redirect to show the updated list of advice
+        return "redirect:/advice"; // Refresh page to show new advice
     }
 }
