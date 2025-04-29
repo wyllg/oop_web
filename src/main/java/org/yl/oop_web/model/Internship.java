@@ -32,6 +32,6 @@ public class Internship {
         this.company = company;
         this.description = description;
         this.link = link;
-        this.imagePath = "https://i.imgur.com/0000000.png"; // Replace with actual default image path if needed
+        this.imagePath = "https://clipground.com/images/bsu-logo-6.png"; // Replace with actual default image path if needed
     }
 }
