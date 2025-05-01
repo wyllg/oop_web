@@ -38,7 +38,8 @@
 <table>
     <thead>
     <tr>
-        <th>Name</th>
+        <th>Title</th>
+        <th>Company</th> <!-- New column for Company -->
         <th>Description</th>
         <th>Link</th>
     </tr>
@@ -46,11 +47,12 @@
     <tbody>
     <tr th:each="internship : ${internships}">
         <td>
-            <span th:text="${internship.name}"></span>
+            <span th:text="${internship.title}"></span>
             <img th:src="${internship.imagePath}" alt="Internship Image" />
         </td>
+        <td th:text="${internship.company}"></td> <!-- Displaying the company name -->
         <td th:text="${internship.description}"></td>
-        <td><a th:href="${internship.link}" th:text="${internship.link}"></a></td>
+        <td><a th:href="${internship.link}" th:text="${internship.link}" target="_blank" rel="noopener"></a></td>
     </tr>
     </tbody>
 </table>
