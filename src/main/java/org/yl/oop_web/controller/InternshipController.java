@@ -23,31 +23,22 @@ public class InternshipController {
         return "internships"; // returns internships.html
     }
 
-    @GetMapping("/add")
+    @GetMapping("/add") // Mapping for adding an internship
     public String showAddInternshipForm(Model model) {
-        model.addAttribute("internships", new Internship());
+        model.addAttribute("internship", new Internship()); // For adding a new internship
         return "addInternship"; // returns addInternship.html
     }
 
-    @GetMapping("/edit")
+    @GetMapping("/edit") // Mapping for editing an existing internship
     public String showEditInternshipForm(@RequestParam Long id, Model model) {
         Internship internship = internshipService.getInternshipById(id);
-        model.addAttribute("internships", internship);
-        return "addInternship";
+        model.addAttribute("internship", internship); // For updating an existing internship
+        return "addInternship"; // returns addInternship.html
     }
 
-    @PostMapping
+    @PostMapping // Handles both adding and updating internships
     public String addOrUpdateInternship(@ModelAttribute Internship internship) {
-        internshipService.addInternship(internship);
-        return "redirect:/internships";
-    }
-
-    // Endpoint to manually add internships via controller (for testing purposes)
-    @GetMapping("/add-dummy")
-    public String addDummyInternships() {
-        internshipService.addInternship(new Internship("Internship 1", "Company 1", "Description for Internship 1", "http://link1.com"));
-        internshipService.addInternship(new Internship("Internship 2", "Company 2", "Description for Internship 2", "http://link2.com"));
-        internshipService.addInternship(new Internship("Internship 3", "Company 3", "Description for Internship 3", "http://link3.com"));
-        return "redirect:/internships";
+        internshipService.addInternship(internship); // This will handle both add and update
+        return "redirect:/internships"; // Redirect to the internships page after adding/updating
     }
 }

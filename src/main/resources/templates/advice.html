@@ -30,13 +30,16 @@
   </style>
 </head>
 <body>
-<h1>Leading Innovations, Transforming Lives</h1>
+<h1>Welcome to Our Website</h1>
 <h2>Advice Section</h2>
 
 <!-- Advice Form -->
 <div class="advice-section">
   <h3>Submit Your Advice</h3>
   <form class="advice-form" action="/advice/submit" method="POST">
+    <!-- CSRF token input -->
+    <input type="hidden" name="_csrf" value="${_csrf.token}">  <!-- This line injects the CSRF token -->
+
     <input type="text" name="name" placeholder="Your Name" required>
     <textarea name="content" rows="4" placeholder="Your Advice" required></textarea>
     <button type="submit">Submit</button>
@@ -47,7 +50,7 @@
 <div class="advice-list">
   <h3>Advice from Others</h3>
   <div>
-    <!-- Assuming the data is passed as a list of advice objects -->
+    <!-- This part will be populated with the posted advice from the database -->
     <div>
       <h4>John Doe</h4>
       <p>Always believe in yourself!</p>
@@ -58,5 +61,6 @@
     </div>
   </div>
 </div>
+
 </body>
 </html>
