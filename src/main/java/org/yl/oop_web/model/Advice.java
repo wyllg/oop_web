@@ -5,11 +5,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.stream.Collectors;
-
 @Setter
 @Getter
 @NoArgsConstructor
@@ -23,20 +18,20 @@ public class Advice {
 
     private String name;
 
+    private String course;
+
     @Column(columnDefinition = "TEXT")
     private String content;
 
-    @ElementCollection
-    @CollectionTable(name = "advice_hashtags", joinColumns = @JoinColumn(name = "advice_id"))
-    @Column(name = "hashtag")
-    private List<String> hashtags = new ArrayList<>();
+    // This stores hashtags as one string (e.g. "life tips college")
+    private String hashtag;
 
-    public static List<String> extractHashtags(String content) {
-        if (content == null) return List.of();
-        return Arrays.stream(content.split("\\s+"))
-                .filter(word -> word.startsWith("#"))
-                .map(word -> word.replaceAll("[^a-zA-Z0-9#]", ""))
-                .collect(Collectors.toList());
+    @OneToMany(mappedBy = "advice", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Comment> comments = new ArrayList<>();
+
+    // Optional utility method to extract hashtags as list
+    public String[] getHashtagList() {
+        return (hashtag != null) ? hashtag.trim().split("\\s+") : new String[0];
     }
 }
 

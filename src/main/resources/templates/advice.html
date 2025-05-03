@@ -54,29 +54,73 @@
     .delete-btn:hover {
         background-color: #c0392b;
     }
+    #advice-form {
+        display: none; /* Initially hidden */
+        margin-bottom: 40px;
+    }
   </style>
 </head>
 <body>
 
 <h1>Advice Board</h1>
 
-<form th:action="@{/advice/submit}" th:object="${advice}" method="post">
-  <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
-
-  <label for="name">Your Name</label>
-  <input type="text" id="name" th:field="*{name}" placeholder="Enter your name" required/>
-
-  <label for="content">Your Advice</label>
-  <textarea id="content" th:field="*{content}" placeholder="Write your advice here..." required></textarea>
-
-  <button type="submit">Submit Advice</button>
+<!-- Search Bar -->
+<form th:action="@{/advice}" method="get">
+  <input type="text" name="search" placeholder="Search by hashtag..." />
+  <button type="submit">Search</button>
 </form>
+
+<!-- Button to Post Advice -->
+<button onclick="document.getElementById('advice-form').style.display='block'">+ Post Advice</button>
+
+<!-- Advice Submission Form -->
+<div id="advice-form">
+  <form th:action="@{/advice/submit}" th:object="${advice}" method="post">
+    <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+
+    <label for="name">Your Name</label>
+    <input type="text" id="name" th:field="*{name}" placeholder="Enter your name" required/>
+
+    <label for="course">Your Course/Job</label>
+    <input type="text" id="course" th:field="*{course}" placeholder="Enter your course/job" required/>
+
+    <label for="content">Your Advice</label>
+    <textarea id="content" th:field="*{content}" placeholder="Write your advice here..." required></textarea>
+
+    <div class="hashtags" th:if="${adv.hashtags != null}">
+      <span th:each="tag : ${#strings.split(adv.hashtags, ' ')}" th:text="'#' + ${tag}">#Hashtag</span>
+    </div>
+
+    <button type="submit">Submit Advice</button>
+  </form>
+</div>
+
+<!-- Existing advice content... -->
+
+<!-- Comments Section -->
+<div style="margin-top: 10px;">
+  <h4>Comments:</h4>
+  <ul>
+    <li th:each="comment : ${adv.comments}">
+      <strong th:text="${comment.author}">Author</strong>:
+      <span th:text="${comment.content}">Comment</span>
+    </li>
+  </ul>
+
+  <form th:action="@{/advice/{id}/comment(id=${adv.id})}" method="post">
+    <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+    <input type="text" name="author" placeholder="Your name" required/>
+    <textarea name="content" placeholder="Write a comment..." required></textarea>
+    <button type="submit">Post Comment</button>
+  </form>
+</div>
+
 
 <div>
   <h2>Posted Advice</h2>
   <div id="advice-list">
     <div th:each="adv : ${advices}" class="advice-item">
-      <p><strong th:text="${adv.name}">Name</strong></p>
+      <p><strong th:text="${adv.name}">Name</strong> (<span th:text="${adv.course}">Course/Job</span>)</p>
       <p th:text="${adv.content}">Advice content</p>
       <div class="hashtags" th:if="${adv.hashtags != null and #lists.size(adv.hashtags) > 0}">
         <span th:each="tag : ${adv.hashtags}" th:text="'#' + ${tag}">#Hashtag</span>
@@ -92,4 +136,5 @@
 
 </body>
 </html>
+
 
