@@ -39,7 +39,7 @@
     <thead>
     <tr>
         <th>Title</th>
-        <th>Company</th> <!-- New column for Company -->
+        <th>Location</th> <!-- New column for Company -->
         <th>Description</th>
         <th>Link</th>
     </tr>
@@ -50,7 +50,7 @@
             <span th:text="${internship.title}"></span>
             <img th:src="${internship.imagePath}" alt="Internship Image" />
         </td>
-        <td th:text="${internship.company}"></td> <!-- Displaying the company name -->
+        <td th:text="${internship.location}"></td> <!-- Displaying the location name -->
         <td th:text="${internship.description}"></td>
         <td><a th:href="${internship.link}" th:text="${internship.link}" target="_blank" rel="noopener"></a></td>
     </tr>

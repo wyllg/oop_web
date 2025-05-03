@@ -17,7 +17,7 @@ public class Internship {
     private Long id;
 
     private String title;
-    private String company;
+    private String location;
     private String description;
     private String link;
     private String imagePath;
@@ -29,7 +29,7 @@ public class Internship {
     // Constructor for easy instantiation
     public Internship(String title, String company, String description, String link) {
         this.title = title;
-        this.company = company;
+        this.location = location;
         this.description = description;
         this.link = link;
         this.imagePath = "https://i.imgur.com/0000000.png";

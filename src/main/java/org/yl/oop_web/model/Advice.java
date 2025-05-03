@@ -2,13 +2,17 @@ package org.yl.oop_web.model;
 
 import jakarta.persistence.*;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Setter
 @Getter
+@NoArgsConstructor
 @Entity
 @Table(name = "advice")
 public class Advice {
@@ -17,28 +21,22 @@ public class Advice {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "name")
     private String name;
 
-    @Column(name = "content", columnDefinition = "TEXT")
+    @Column(columnDefinition = "TEXT")
     private String content;
 
-    // Store hashtags as comma separated string or map to entity (simple approach here)
     @ElementCollection
-    @CollectionTable(name="advice_hashtags", joinColumns=@JoinColumn(name="advice_id"))
-    @Column(name="hashtag")
+    @CollectionTable(name = "advice_hashtags", joinColumns = @JoinColumn(name = "advice_id"))
+    @Column(name = "hashtag")
     private List<String> hashtags = new ArrayList<>();
 
-    // Relationship with comments
-    @OneToMany(mappedBy = "advice", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
-    private List<Comment> comments = new ArrayList<>();
-
-    public Advice() {}
-
-    public Advice(String name, String content) {
-        this.name = name;
-        this.content = content;
+    public static List<String> extractHashtags(String content) {
+        if (content == null) return List.of();
+        return Arrays.stream(content.split("\\s+"))
+                .filter(word -> word.startsWith("#"))
+                .map(word -> word.replaceAll("[^a-zA-Z0-9#]", ""))
+                .collect(Collectors.toList());
     }
 }
-
 
