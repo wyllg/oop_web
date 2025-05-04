@@ -5,8 +5,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@Setter
 @Getter
+@Setter
 @NoArgsConstructor
 @Entity
 @Table(name = "advice")
@@ -22,16 +22,4 @@ public class Advice {
 
     @Column(columnDefinition = "TEXT")
     private String content;
-
-    // This stores hashtags as one string (e.g. "life tips college")
-    private String hashtag;
-
-    @OneToMany(mappedBy = "advice", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Comment> comments = new ArrayList<>();
-
-    // Optional utility method to extract hashtags as list
-    public String[] getHashtagList() {
-        return (hashtag != null) ? hashtag.trim().split("\\s+") : new String[0];
-    }
 }
-

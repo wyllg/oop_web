@@ -2,7 +2,6 @@ package org.yl.oop_web.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import org.yl.oop_web.model.Advice;
 import org.yl.oop_web.repository.AdviceRepository;
 
@@ -18,9 +17,11 @@ public class AdviceService {
         return adviceRepository.findAll();
     }
 
-    public List<Advice> searchAdvicesByHashtag(String hashtag) {
-        return adviceRepository.findByHashtagsContaining(hashtag);
+    public Advice saveAdvice(Advice advice) {
+        return adviceRepository.save(advice);
     }
 
-    // Other methods remain unchanged
+    public void deleteAdvice(Long id) {
+        adviceRepository.deleteById(id);
+    }
 }

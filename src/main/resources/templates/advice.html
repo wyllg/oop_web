@@ -1,29 +1,48 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
-  <meta charset="UTF-8"/>
+  <meta charset="UTF-8">
   <title>Advice Board</title>
   <style>
     body {
         font-family: Arial, sans-serif;
-        max-width: 800px;
+        max-width: 900px;
         margin: 20px auto;
+        background-color: #f4f4f9;
     }
-    form {
+    h1, h2 {
+        color: #333;
+        text-align: center;
+    }
+    .container {
+        padding: 20px;
+        background-color: white;
+        border-radius: 8px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+    .form-container {
         margin-bottom: 40px;
     }
+    form {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 15px;
+    }
+    label {
+        font-weight: bold;
+        color: #555;
+    }
     input, textarea {
+        padding: 10px;
+        font-size: 16px;
+        border-radius: 5px;
+        border: 1px solid #ddd;
         width: 100%;
-        padding: 8px;
-        margin: 6px 0;
-        border-radius: 4px;
-        border: 1px solid #ccc;
-        box-sizing: border-box;
     }
     button {
-        background-color: #4caf50;
+        padding: 10px;
+        background-color: #4CAF50;
         color: white;
-        padding: 10px 18px;
         border: none;
         border-radius: 5px;
         cursor: pointer;
@@ -32,106 +51,74 @@
         background-color: #45a049;
     }
     .advice-item {
-        background: #f9f9f9;
-        border-radius: 6px;
-        padding: 16px;
         margin-bottom: 20px;
-        border: 1px solid #ddd;
-        position: relative;
+        background-color: #fafafa;
+        padding: 15px;
+        border-radius: 6px;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
     }
-    .hashtags span {
-        color: #007bff;
-        margin-right: 8px;
-        font-weight: bold;
-        cursor: pointer;
+    .advice-item h3 {
+        margin: 0;
+        color: #555;
     }
-    .delete-btn {
-        position: absolute;
-        top: 16px;
-        right: 16px;
-        background-color: #e74c3c;
+    .advice-item p {
+        margin: 10px 0;
+        color: #333;
     }
-    .delete-btn:hover {
-        background-color: #c0392b;
+    .advice-item .meta {
+        font-size: 14px;
+        color: #777;
     }
-    #advice-form {
-        display: none; /* Initially hidden */
-        margin-bottom: 40px;
+    .back-button {
+        padding: 10px 20px;
+        background-color: #007bff;
+        color: white;
+        text-align: center;
+        display: inline-block;
+        border-radius: 5px;
+        text-decoration: none;
+        margin-top: 20px;
+    }
+    .back-button:hover {
+        background-color: #0056b3;
     }
   </style>
 </head>
 <body>
 
-<h1>Advice Board</h1>
+<div class="container">
+  <h1>Advice Board</h1>
 
-<!-- Search Bar -->
-<form th:action="@{/advice}" method="get">
-  <input type="text" name="search" placeholder="Search by hashtag..." />
-  <button type="submit">Search</button>
-</form>
+  <!-- Form to Submit Advice -->
+  <div class="form-container">
+    <h2>Post Your Advice</h2>
+    <form th:action="@{/advice/submit}" method="post">
+      <label for="name">Your Name:</label>
+      <input type="text" id="name" name="name" required placeholder="Enter your name" />
 
-<!-- Button to Post Advice -->
-<button onclick="document.getElementById('advice-form').style.display='block'">+ Post Advice</button>
+      <label for="course">Your Course/Job:</label>
+      <input type="text" id="course" name="course" required placeholder="Enter your course/job" />
 
-<!-- Advice Submission Form -->
-<div id="advice-form">
-  <form th:action="@{/advice/submit}" th:object="${advice}" method="post">
-    <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+      <label for="content">Your Advice:</label>
+      <textarea id="content" name="content" required placeholder="Write your advice here..."></textarea>
 
-    <label for="name">Your Name</label>
-    <input type="text" id="name" th:field="*{name}" placeholder="Enter your name" required/>
+      <button type="submit">Submit Advice</button>
+    </form>
+  </div>
 
-    <label for="course">Your Course/Job</label>
-    <input type="text" id="course" th:field="*{course}" placeholder="Enter your course/job" required/>
-
-    <label for="content">Your Advice</label>
-    <textarea id="content" th:field="*{content}" placeholder="Write your advice here..." required></textarea>
-
-    <div class="hashtags" th:if="${adv.hashtags != null}">
-      <span th:each="tag : ${#strings.split(adv.hashtags, ' ')}" th:text="'#' + ${tag}">#Hashtag</span>
-    </div>
-
-    <button type="submit">Submit Advice</button>
-  </form>
-</div>
-
-<!-- Existing advice content... -->
-
-<!-- Comments Section -->
-<div style="margin-top: 10px;">
-  <h4>Comments:</h4>
-  <ul>
-    <li th:each="comment : ${adv.comments}">
-      <strong th:text="${comment.author}">Author</strong>:
-      <span th:text="${comment.content}">Comment</span>
-    </li>
-  </ul>
-
-  <form th:action="@{/advice/{id}/comment(id=${adv.id})}" method="post">
-    <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
-    <input type="text" name="author" placeholder="Your name" required/>
-    <textarea name="content" placeholder="Write a comment..." required></textarea>
-    <button type="submit">Post Comment</button>
-  </form>
-</div>
-
-
-<div>
+  <!-- Displaying the Submitted Advice -->
   <h2>Posted Advice</h2>
-  <div id="advice-list">
-    <div th:each="adv : ${advices}" class="advice-item">
-      <p><strong th:text="${adv.name}">Name</strong> (<span th:text="${adv.course}">Course/Job</span>)</p>
-      <p th:text="${adv.content}">Advice content</p>
-      <div class="hashtags" th:if="${adv.hashtags != null and #lists.size(adv.hashtags) > 0}">
-        <span th:each="tag : ${adv.hashtags}" th:text="'#' + ${tag}">#Hashtag</span>
-      </div>
 
-      <form th:action="@{/advice/delete/{id}(id=${adv.id})}" method="post" style="display:inline">
-        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
-        <button class="delete-btn" type="submit" onclick="return confirm('Delete this advice?');">Delete</button>
-      </form>
+  <div th:each="adv : ${advices}">
+    <div class="advice-item">
+      <h3 th:text="${adv.name}"></h3>
+      <p class="meta" th:text="'Course/Job: ' + ${adv.course}"></p>
+      <p th:text="${adv.content}"></p>
     </div>
   </div>
+
+  <!-- Back Button -->
+  <a href="/" class="back-button">Back to Home</a>
 </div>
 
 </body>
