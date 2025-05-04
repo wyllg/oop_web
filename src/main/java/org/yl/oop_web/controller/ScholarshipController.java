@@ -10,7 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.yl.oop_web.service.UserService;
-
 import java.security.Principal;
 import java.util.List;
 import java.util.Optional;
@@ -39,7 +38,7 @@ public class ScholarshipController {
 
             if (user.isPresent()) {
                 model.addAttribute("isOwner", true);
-                model.addAttribute("user", user.get()); // Assuming you have a User class
+                model.addAttribute("user", user.get());
             } else {
                 model.addAttribute("isOwner", false);
             }
@@ -51,15 +50,33 @@ public class ScholarshipController {
     }
 
     @GetMapping("/add") // Mapping for adding a scholarship
-    public String showAddScholarshipForm(Model model) {
-        model.addAttribute("scholarship", new Scholarship()); // For adding a new scholarship
-        return "addScholarship"; // returns the addScholarship.html template
-    }
+    public String showAddScholarshipForm(Model model, Principal principal) {
+        // Check if the user is logged in
+        if (principal == null) {
+            // Redirect to homepage if the user is not logged in
+            return "redirect:/";
+        }
 
-    @GetMapping("/edit")
-    public String showEditScholarshipForm(@RequestParam Long id, Model model) {
-        Scholarship scholarship = scholarshipService.getScholarshipById(id);
-        model.addAttribute("scholarship", scholarship); // For updating an existing scholarship
+        String username = principal.getName();
+        Optional<User> userOptional = userService.findByUsername(username);
+
+        // Check if the user exists
+        if (!userOptional.isPresent()) {
+            // Redirect to homepage if user is not found
+            return "redirect:/";
+        }
+
+        User user = userOptional.get(); // Get the User object
+        String role = user.getRole(); // Retrieve the user's role
+
+        // Check if role is null or empty
+        if (role == null || role.trim().isEmpty()) {
+            // Redirect to homepage if role is null or empty
+            return "redirect:/landing";
+        }
+
+        model.addAttribute("scholarship", new Scholarship()); // For adding a new scholarship
+
         return "addScholarship"; // returns the addScholarship.html template
     }
 

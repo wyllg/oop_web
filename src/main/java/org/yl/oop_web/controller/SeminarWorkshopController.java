@@ -14,7 +14,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.yl.oop_web.service.UserService;
-
 import java.security.Principal;
 import java.util.List;
 import java.util.Optional;
@@ -57,23 +56,41 @@ public class SeminarWorkshopController {
         return "seminars"; // returns the seminars.html template
     }
 
-    @GetMapping("/add") // Mapping for adding a seminar/workshop
-    public String showAddSeminarWorkshopForm(Model model) {
+    @GetMapping("/add") // Mapping for adding a scholarship
+    public String showAddSeminarWorkshopForm(Model model, Principal principal) {
+        // Check if the user is logged in
+        if (principal == null) {
+            // Redirect to homepage if the user is not logged in
+            return "redirect:/";
+        }
+
+        String username = principal.getName();
+        Optional<User> userOptional = userService.findByUsername(username);
+
+        // Check if the user exists
+        if (!userOptional.isPresent()) {
+            // Redirect to homepage if user is not found
+            return "redirect:/";
+        }
+
+        User user = userOptional.get(); // Get the User object
+        String role = user.getRole(); // Retrieve the user's role
+
+        // Check if role is null or empty
+        if (role == null || role.trim().isEmpty()) {
+            // Redirect to homepage if role is null or empty
+            return "redirect:/landing";
+        }
+
         model.addAttribute("seminarWorkshop", new SeminarWorkshop()); // For adding a new seminar/workshop
-        return "addSeminarWorkshop"; // returns the addSeminarWorkshop.html template
+
+        return "addSeminarWorkshop"; // returns the addScholarship.html template
     }
 
     @PostMapping
     public String addOrUpdateSeminarWorkshop(@ModelAttribute SeminarWorkshop seminarWorkshop) {
         seminarWorkshopService.addSeminarWorkshop(seminarWorkshop); // This will handle both add and update
         return "redirect:/seminars"; // Redirect to the seminars page after adding/updating
-    }
-
-    @GetMapping("/edit")
-    public String showEditSeminarWorkshopForm(@RequestParam Long id, Model model) {
-        SeminarWorkshop seminarWorkshop = seminarWorkshopService.getSeminarWorkshopById(id);
-        model.addAttribute("seminarWorkshop", seminarWorkshop); // For updating an existing seminar/workshop
-        return "addSeminarWorkshop"; // returns the addSeminarWorkshop.html template
     }
 
     @PostMapping("/apply") // Method to handle applications

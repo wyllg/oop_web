@@ -6,7 +6,6 @@ import jakarta.transaction.Transactional;
 import org.yl.oop_web.model.User;
 import org.yl.oop_web.repository.UserRepository;
 import org.springframework.stereotype.Service;
-
 import java.util.Optional;
 
 @Service
@@ -29,6 +28,12 @@ public class UserService {
         Optional<User> user = userRepository.findByEmail(email);
 
         return userRepository.findByEmail(email);
+    }
+
+    public Optional<User> findByRole(String role) {
+        Optional<User> user = userRepository.findByRole(role);
+
+        return userRepository.findByRole(role);
     }
 
     @Transactional

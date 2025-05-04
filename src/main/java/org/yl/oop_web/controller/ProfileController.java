@@ -7,18 +7,14 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.yl.oop_web.model.User;
 import org.yl.oop_web.service.UserService;
-
 import java.security.Principal;
 import java.time.LocalDate;
 import java.time.Month;
 import java.time.Year;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 
 @Controller
 @RequestMapping("/profile")
@@ -44,23 +40,6 @@ public class ProfileController {
         }
         return years;
     }
-
-//    public static String formatMonth(Month month) {
-//        if (month == null) {
-//            return "";
-//        }
-//        return month.toString().charAt(0) + month.toString().substring(1).toLowerCase();
-//    }
-
-//    @ModelAttribute("months")
-//    public List<String> getMonths() {
-//        return Arrays.asList("January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December");
-//    }
-//
-//    @ModelAttribute("years")
-//    public List<Integer> getYears() {
-//        return Arrays.asList(1999, 2000, 2001, 2002, 2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019,2020, 2021, 2022, 2023, 2024, 2025, 2026, 2027, 2028, 2029, 2030, 2031, 2032, 2033, 2034, 2035);  // Customize the year range as needed
-//    }
 
     @GetMapping("/{username}")
     public String profileForm (@PathVariable String username, Model model, Principal principal) {

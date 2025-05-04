@@ -69,4 +69,6 @@ public class User {
 
     private Year endYear;
 
+    private String role;
+
 }

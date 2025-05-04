@@ -11,4 +11,5 @@ public interface UserRepository extends JpaRepository<User, Long> {
     Optional<User> findByUsername(String username); // Used in AuthController to check for usernames
     @Query("SELECT u FROM User u WHERE u.email = ?1")
     Optional<User> findByEmail(String email); // Used in AuthController to check for duplicate emails
+    Optional<User> findByRole(String role);
 }

@@ -2,7 +2,7 @@
 
 package org.yl.oop_web.controller;
 
-import org.springframework.security.core.Authentication;
+
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.yl.oop_web.model.User;
 import org.yl.oop_web.service.UserService;
@@ -13,7 +13,6 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-
 import java.security.Principal;
 import java.util.Optional;
 
@@ -70,12 +69,6 @@ public class AuthController {
         model.addAttribute("user", new User());
         return "login";
     }
-
-//    @GetMapping("/landing")
-//    public String redirectAfterLogin(Authentication authentication) {
-//        String username = authentication.getName();
-//        return "landing";
-//    }
 
     @GetMapping("/landing")
     public String home(Model model, Principal principal) {
