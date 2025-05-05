@@ -18,8 +18,11 @@ public class Internship {
 
     private String title;
     private String location;
+    @Column(length = 3000)
     private String description;
+    @Column(length = 600)
     private String link;
+    @Column(length = 600)
     private String imagePath;
 
     @ManyToOne
