@@ -117,6 +117,7 @@
       font-size: 14px;
       color: #444;
       margin: 10px 0;
+      text-align: justify;
     }
 
     .actions a {
@@ -148,6 +149,8 @@
   <a th:if="${user == null}" th:href="@{/login}" class="btn">Login</a>
 
   <a href="/seminars">Seminars</a>
+  <a href="/internships">Internships</a>
+  <a href="/advice">Advices</a>
 
   <!-- Show logout only if user is logged in -->
   <form th:if="${user != null}" th:action="@{/logout}" method="post">

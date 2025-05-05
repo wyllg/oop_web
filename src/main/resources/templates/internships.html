@@ -4,57 +4,147 @@
     <title>Internships</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Raleway:wght@400;700&display=swap');
+
         body {
-            font-family: Arial, sans-serif;
-            margin: 20px;
+          font-family: 'Raleway', sans-serif;
+          background-color: #fff;
+          margin: 0;
+          padding: 0;
         }
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-bottom: 20px;
+
+        nav {
+          background-color: #0041a3;
+          padding: 15px 40px;
+          display: flex;
+          justify-content: flex-end;
         }
-        th, td {
-            border: 1px solid #ddd;
-            padding: 8px;
-            text-align: left;
+
+        nav a {
+          color: white;
+          text-decoration: none;
+          margin-left: 20px;
+          font-weight: bold;
         }
-        th {
-            background-color: #f2f2f2;
+
+        h1 {
+          margin: 30px 60px 20px;
+          font-size: 40px;
+          color: #333;
+          text-align: center;
+          text-shadow: 0 4px 10px rgba(0,0,0,0.2);
         }
-        a {
-            text-decoration: none;
-            color: blue;
+
+        .panel {
+          margin: 0 auto 40px;
+          background-color: #f7f7f7;
+          border: 1px solid #ccc;
+          border-radius: 10px;
+          padding: 30px;
+          max-width: 1600px;
         }
-        img {
-            width: 100px;
-            height: auto;
-            display: block;
-            margin-top: 5px;
+
+        .card-container {
+          display: flex;
+          flex-wrap: wrap;
+          gap: 20px;
+          padding: 0 10px;
+        }
+
+        .card {
+          width: 300px;
+          background-color: #fff;
+          border-radius: 10px;
+          box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+          overflow: hidden;
+          display: flex;
+          flex-direction: column;
+          transition: 0.2s ease-in-out;
+        }
+
+        .card:hover {
+          transform: scale(1.05);
+          transition: 0.2s ease-in-out;
+        }
+
+        .card img {
+          width: 100%;
+          height: 180px;
+          object-fit: cover;
+        }
+
+        .card-content {
+          padding: 15px 20px;
+        }
+
+        .card h3 {
+          margin: 0;
+          font-size: 20px;
+          color: #333;
+          margin-bottom: 5px;
+        }
+
+        .location {
+          font-size: 14px;
+          color: #666;
+          margin-bottom: 10px;
+        }
+
+        .description {
+          font-size: 14px;
+          color: #444;
+          text-align: justify;
+          margin-bottom: 10px;
+        }
+
+        .link a {
+          font-size: 14px;
+          color: #274ecc;
+          text-decoration: none;
+        }
+
+        .link a:hover {
+          transform: scale(1.87px);
+          cursor: pointer;
         }
     </style>
 </head>
 <body>
+
+<!-- Navbar -->
+<nav>
+    <a href="/landing">Home</a>
+    <a th:if="${user == null}" th:href="@{/login}" class="btn">Login</a>
+    <a href="/profile">Profile</a>
+    <a href="/scholarships">Scholarships</a>
+    <a href="/seminars">Seminars</a>
+    <a href="/advice">Advices</a>
+    <a th:if="${isAdmin}" href="/addinternship">Add Internship</a>
+    <!-- Show logout only if user is logged in -->
+    <form th:if="${user != null}" th:action="@{/logout}" method="post">
+        <button type="submit" class="nav-link-button">Logout</button>
+    </form>
+</nav>
+
 <h1>Internships</h1>
-<table>
-    <thead>
-    <tr>
-        <th>Title</th>
-        <th>Location</th> <!-- New column for Company -->
-        <th>Description</th>
-        <th>Link</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr th:each="internship : ${internships}">
-        <td>
-            <span th:text="${internship.title}"></span>
-            <img th:src="${internship.imagePath}" alt="Internship Image" />
-        </td>
-        <td th:text="${internship.location}"></td> <!-- Displaying the location name -->
-        <td th:text="${internship.description}"></td>
-        <td><a th:href="${internship.link}" th:text="${internship.link}" target="_blank" rel="noopener"></a></td>
-    </tr>
-    </tbody>
-</table>
+
+<!-- Panel Start -->
+<div class="panel">
+    <div class="card-container">
+        <div class="card" th:each="internship : ${internships}">
+            <img th:src="${internship.imagePath}" alt="Internship Image">
+            <div class="card-content">
+                <h3 th:text="${internship.title}">Internship Title</h3>
+                <div class="location" th:text="${internship.location}">Location</div>
+                <div class="description" th:text="${internship.description}">Description</div>
+                <div class="link">
+                    <a th:href="${internship.link}" target="_blank">View Details</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Panel End -->
+
 </body>
 </html>

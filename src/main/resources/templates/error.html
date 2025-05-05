@@ -4,53 +4,73 @@
     <meta charset="UTF-8">
     <title>Error Page</title>
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Raleway:wght@400;700&display=swap');
+
         body {
-            font-family: Arial, sans-serif;
-            max-width: 900px;
-            margin: 20px auto;
+            font-family: 'Raleway', sans-serif;
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(to top, hsla(229, 100%, 50%, 0.822), rgba(255, 255, 255, 0.75), hsla(229, 100%, 50%, 0.822)),
+            url("https://images.pexels.com/photos/206359/pexels-photo-206359.jpeg?cs=srgb&dl=pexels-pixabay-206359.jpg&fm=jpg");
+            background-size: cover;
             padding: 20px;
-            background-color: #f4f4f9;
         }
-        .error-container {
-            background-color: white;
+
+        .container {
+            height: 300px;
+            width: 700px;
+            padding: 40px;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+        }
+
+        h1 {
+            font-size: 48px;
+            color: #e74c3c;
+            margin-bottom: 20px;
+            text-shadow: 0 4px 10px rgba(73, 73, 73, 0.2);
+        }
+
+        .error-details {
+            background-color: #fbeaea;
             padding: 20px;
             border-radius: 8px;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            color: #a94442;
+            margin-bottom: 30px;
+            font-size: 16px;
         }
-        h1 {
-            color: #e74c3c;
-            text-align: center;
-        }
-        .error-details {
-            margin: 20px 0;
-            padding: 15px;
-            background-color: #f8d7da;
-            border-radius: 4px;
-        }
+
         .back-button {
-            display: block;
-            width: 200px;
-            margin: 20px auto;
-            padding: 10px;
-            background-color: #007bff;
+            display: inline-block;
+            padding: 12px 24px;
+            font-size: 16px;
+            background-color: #0051ca;
             color: white;
-            text-align: center;
             text-decoration: none;
-            border-radius: 5px;
+            border-radius: 6px;
+            transition: background-color 0.2s ease-in-out;
+            font-weight: bold;
         }
+
         .back-button:hover {
-            background-color: #0056b3;
+            background-color: #013e99;
         }
     </style>
 </head>
 <body>
-<div class="error-container">
+<div class="container">
     <h1 th:text="${status}">Error</h1>
-
     <div class="error-details">
-        <p th:text="${message}">An error occurred.</p>
+        <p th:text="${message}">An unexpected error occurred. Please try again later.</p>
     </div>
-
     <a href="/landing" class="back-button">Back to Home</a>
 </div>
 </body>

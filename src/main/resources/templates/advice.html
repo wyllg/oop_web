@@ -4,21 +4,39 @@
   <meta charset="UTF-8">
   <title>Advice Board</title>
   <style>
-    body {
-        font-family: Arial, sans-serif;
-        max-width: 900px;
-        margin: 20px auto;
-        background-color: #f4f4f9;
+    @import url('https://fonts.googleapis.com/css2?family=Raleway:wght@400;700&display=swap');
+
+    * {
+      box-sizing: border-box;
+      font-family: 'Raleway', sans-serif;
     }
-    h1, h2 {
+
+    body {
+        margin: 0;
+        padding: 20px;
+        height: 100vh;
+        width: 100%;
+        background: linear-gradient(to top, hsla(229, 100%, 50%, 0.822), rgba(255, 255, 255, 0.75), hsla(229, 100%, 50%, 0.822)),
+        url("https://media.cnn.com/api/v1/images/stellar/prod/200701174417-university-of-washington-campus-aerial.jpg?q=w_1600,h_1167,x_0,y_0,c_fill");
+        background-size: cover;
+    }
+    h1 {
+        font-size: 45px;
+        color: #333;
+        text-align: center;
+    }
+
+    h2 {
         color: #333;
         text-align: center;
     }
     .container {
+        width: 100%;
+        max-width: 900px;
         padding: 20px;
         background-color: white;
         border-radius: 8px;
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        box-shadow: 0 6px 16px rgba(0, 0, 0, 0.5);
     }
     .form-container {
         margin-bottom: 40px;
@@ -32,30 +50,41 @@
         font-weight: bold;
         color: #555;
     }
-    input, textarea {
+    input{
         padding: 10px;
         font-size: 16px;
         border-radius: 5px;
         border: 1px solid #ddd;
         width: 100%;
     }
+    textarea {
+        padding: 10px;
+        font-size: 16px;
+        border-radius: 5px;
+        border: 1px solid #ddd;
+        width: 100%;
+        resize: vertical;
+        max-height: 300px;
+    }
     button {
         padding: 10px;
         background-color: #4CAF50;
+        font-weight: bold;
         color: white;
         border: none;
-        border-radius: 5px;
+        border-radius: 8px;
         cursor: pointer;
     }
     button:hover {
         background-color: #45a049;
     }
+
     .advice-item {
         margin-bottom: 20px;
         background-color: #fafafa;
         padding: 15px;
         border-radius: 6px;
-        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.34);
     }
     .advice-item h3 {
         margin: 0;
@@ -71,7 +100,8 @@
     }
     .back-button {
         padding: 10px 20px;
-        background-color: #007bff;
+        font-weight: bold;
+        background-color: #0065d1;
         color: white;
         text-align: center;
         display: inline-block;
@@ -82,45 +112,65 @@
     .back-button:hover {
         background-color: #0056b3;
     }
+
+    hr {
+        border: none;
+        height: 4px;
+        background-color: #000000;
+        margin: 15px 0;
+        border-radius: 2px;
+    }
+
+    .page-wrapper {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+        padding: 20px;
+      }
+
   </style>
 </head>
 <body>
+<div class="page-wrapper">
+  <div class="container">
+    <h1>Advice Board</h1>
+    <hr>
+    <!-- Form to Submit Advice -->
+    <div class="form-container" th:if="${isOwner}">
+      <h2>Post Your Advice</h2>
+      <form th:action="@{/advice/submit}" method="post">
+        <label for="name">Your Name:</label>
+        <input type="text" id="name" name="name" required placeholder="Enter your name" />
 
-<div class="container">
-  <h1>Advice Board</h1>
+        <label for="course">Your Course/Job:</label>
+        <input type="text" id="course" name="course" required placeholder="Enter your course/job" />
 
-  <!-- Form to Submit Advice -->
-  <div class="form-container" th:if="${isOwner}">
-    <h2>Post Your Advice</h2>
-    <form th:action="@{/advice/submit}" method="post">
-      <label for="name">Your Name:</label>
-      <input type="text" id="name" name="name" required placeholder="Enter your name" />
+        <label for="content">Your Advice:</label>
+        <textarea id="content" name="content" required placeholder="Write your advice here..."></textarea>
 
-      <label for="course">Your Course/Job:</label>
-      <input type="text" id="course" name="course" required placeholder="Enter your course/job" />
-
-      <label for="content">Your Advice:</label>
-      <textarea id="content" name="content" required placeholder="Write your advice here..."></textarea>
-
-      <button type="submit">Submit Advice</button>
-    </form>
-  </div>
-
-  <!-- Displaying the Submitted Advice -->
-  <h2>Posted Advice</h2>
-
-  <div th:each="adv : ${advices}">
-    <div class="advice-item">
-      <h3 th:text="${adv.name}"></h3>
-      <p class="meta" th:text="'Course/Job: ' + ${adv.course}"></p>
-      <p th:text="${adv.content}"></p>
+        <button type="submit">Submit Advice</button>
+      </form>
     </div>
+
+    <!-- Displaying the Submitted Advice -->
+    <div class="advice-title">
+      <h2>Posted Advice</h2>
+    </div>
+
+
+    <div th:each="adv : ${advices}">
+      <div class="advice-item">
+        <h3 th:text="${adv.name}"></h3>
+        <p class="meta" th:text="'Course/Job: ' + ${adv.course}"></p>
+        <p th:text="${adv.content}"></p>
+      </div>
+    </div>
+
+    <!-- Back Button -->
+    <a href="/landing" class="back-button">Back to Home</a>
   </div>
-
-  <!-- Back Button -->
-  <a href="/" class="back-button">Back to Home</a>
 </div>
-
 </body>
 </html>
 
