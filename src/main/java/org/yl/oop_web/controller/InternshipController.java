@@ -30,10 +30,25 @@ public class InternshipController {
     private InternshipService internshipService;
 
     @GetMapping
-    public String getAllInternships(Model model) {
+    public String getAllInternships(Model model, Principal principal) {
         List<Internship> internships = internshipService.getAllInternships();
         model.addAttribute("internships", internships);
-        return "internships"; // returns internships.html
+
+        if (principal != null) {
+            String username = principal.getName();
+            Optional<User> user = userService.findByUsername(username);
+
+            if (user.isPresent()) {
+                model.addAttribute("isOwner", true);
+                model.addAttribute("user", user.get());
+            } else {
+                model.addAttribute("isOwner", false);
+            }
+        } else {
+            model.addAttribute("isOwner", false);
+        }
+
+        return "internships";
     }
 
     @GetMapping("/add") // Mapping for adding a scholarship

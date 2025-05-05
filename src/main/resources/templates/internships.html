@@ -107,19 +107,37 @@
           transform: scale(1.87px);
           cursor: pointer;
         }
+
+        .nav-link-button {
+            background: none;
+            border: none;
+            color: white;
+            font-weight: bold;
+            margin-left: 20px;
+            cursor: pointer;
+            font-family: inherit;
+            font-size: inherit;
+            text-decoration: none;
+            padding: 0;
+            transition: 0.2s ease-in-out;
+        }
+
     </style>
 </head>
 <body>
 
-<!-- Navbar -->
+<!--Navbar-->
 <nav>
     <a href="/landing">Home</a>
+
+    <!-- Show profile link only if user is logged in, if not logged in it shows login link -->
+    <a th:if="${user != null}" th:href="@{/profile/{username}(username=${user.username})}" class="btn">Profile</a>
     <a th:if="${user == null}" th:href="@{/login}" class="btn">Login</a>
-    <a href="/profile">Profile</a>
+
     <a href="/scholarships">Scholarships</a>
-    <a href="/seminars">Seminars</a>
+    <a href="/internships">Internships</a>
     <a href="/advice">Advices</a>
-    <a th:if="${isAdmin}" href="/addinternship">Add Internship</a>
+
     <!-- Show logout only if user is logged in -->
     <form th:if="${user != null}" th:action="@{/logout}" method="post">
         <button type="submit" class="nav-link-button">Logout</button>
