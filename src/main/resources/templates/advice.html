@@ -90,7 +90,7 @@
   <h1>Advice Board</h1>
 
   <!-- Form to Submit Advice -->
-  <div class="form-container">
+  <div class="form-container" th:if="${isOwner}">
     <h2>Post Your Advice</h2>
     <form th:action="@{/advice/submit}" method="post">
       <label for="name">Your Name:</label>

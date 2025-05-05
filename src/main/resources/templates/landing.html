@@ -4,21 +4,157 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Landing Page</title>
+    <link rel="stylesheet" href="landing-style.css">
 </head>
 <body>
-<h1>Welcome to our website</h1>
-<p>Contents of the website:</p>
-<a href="/scholarships">Scholarships</a><br>
-<a href="/seminars">Seminars</a><br>
-<a href="/internships">Internships</a><br>
-<a href="/advice">Advice</a>
+<div class="container">
+    <div class="card panel">
+        <h1 class="title">Welcome to our website</h1>
+        <hr>
+        <p class="subtitle">Contents of the website:</p>
+        <div class="links">
+            <a href="/scholarships" class="btn">Scholarship Opportunities</a>
+            <a href="/seminars" class="btn">Seminars and Workshops</a>
+            <a href="/internships" class="btn">Internships</a>
+            <a href="/advice" class="btn">Advice Section</a>
+        </div>
 
-<!--Only shows if the user is logged in-->
-<div th:if="${isOwner}">
-    <a th:href="@{/profile/{username}(username=${user.username})}" class="btn btn-primary">Visit your profile</a>
-    <form th:action="@{/logout}" method="post">
-        <button type="submit" class="btn btn-danger">Logout</button>
-    </form>
+        <!--Only shows if the user is logged in-->
+        <div class="user-links" th:if="${isOwner}">
+            <a th:href="@{/profile/{username}(username=${user.username})}" class="btn">Visit your profile</a>
+            <form th:action="@{/logout}" method="post">
+                <button type="submit" class="btn-outline">Logout</button>
+            </form>
+        </div>
+    </div>
 </div>
 </body>
 </html>
+
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Raleway:wght@300;400;600&display=swap');
+
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: 'Raleway', sans-serif;
+        text-decoration: none;
+    }
+
+    body {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 100vh;
+        background: linear-gradient(to top, hsla(229, 100%, 50%, 0.822), rgba(255, 255, 255, 0.75), hsla(229, 100%, 50%, 0.822)),
+        url("https://upload.wikimedia.org/wikipedia/commons/thumb/8/8e/Staples_High_School%2C_Westport%2C_CT.jpg/960px-Staples_High_School%2C_Westport%2C_CT.jpg");
+        background-size: cover;
+        background-repeat: no-repeat;
+        padding: 20px;
+        position: relative;
+    }
+
+    .container {
+        width: 100%;
+        max-width: 1200px;
+        padding: 40px;
+    }
+
+    .card.panel {
+        background: rgba(255, 255, 255, 0.75);
+        border-radius: 16px;
+        padding: 40px;
+        box-shadow: 0 12px 25px rgba(0, 0, 0, 0.25);
+        text-align: center;
+        position: relative;
+        height: 650px;
+        animation: fadeIn 1s ease-out;
+        transition: all 0.3s ease;
+        backdrop-filter: blur(4px);
+    }
+
+    .card.panel:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+    }
+
+    .title {
+        font-size: 60px;
+        font-weight: 700;
+        margin-bottom: 15px;
+        color: #222222;
+    }
+
+    .subtitle {
+        font-weight: bold;
+        font-size: 24px;
+        margin-bottom: 30px;
+        color: #000000;
+    }
+
+    hr {
+        border: none;
+        height: 4px;
+        background-color: #000000;
+        margin: 20px 0;
+        border-radius: 2px;
+    }
+
+    .links {
+        display: flex;
+        flex-direction: column;
+        gap: 30px;
+        margin-top: 40px;
+        align-items: center;
+    }
+
+    .user-links {
+        display: flex;
+        justify-content: space-between;
+        position: absolute;
+        bottom: 30px;
+        left: 40px;
+        right: 40px;
+    }
+
+    .user-links a,
+    .user-links form {
+        margin: 0;
+    }
+
+    a {
+        text-decoration: none;
+        color: inherit;
+        transition: color 0.3s ease;
+    }
+
+    a:hover {
+        color: #0041a3;
+        text-decoration: underline;
+    }
+
+    .btn, .btn-outline {
+        display: inline-block;
+        padding: 14px 32px;
+        border-radius: 10px;
+        font-weight: 700;
+        font-size: 20px;
+        transition: all 0.3s ease;
+        text-align: center;
+        cursor: pointer;
+        border: 2px solid #000000;
+        background-color: transparent;
+        color: #000000;
+        box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+    }
+
+    .btn:hover, .btn-outline:hover {
+        background-color: #0041a3;
+        color: white;
+        transform: scale(1.05);
+        text-decoration: none;
+        border-color: white;
+        box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+    }
+</style>
