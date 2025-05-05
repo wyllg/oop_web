@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Advice Board</title>
+  <style>
+    body {
+        font-family: Arial, sans-serif;
+        max-width: 900px;
+        margin: 20px auto;
+        background-color: #f4f4f9;
+    }
+    h1, h2 {
+        color: #333;
+        text-align: center;
+    }
+    .container {
+        padding: 20px;
+        background-color: white;
+        border-radius: 8px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+    .form-container {
+        margin-bottom: 40px;
+    }
+    form {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 15px;
+    }
+    label {
+        font-weight: bold;
+        color: #555;
+    }
+    input, textarea {
+        padding: 10px;
+        font-size: 16px;
+        border-radius: 5px;
+        border: 1px solid #ddd;
+        width: 100%;
+    }
+    button {
+        padding: 10px;
+        background-color: #4CAF50;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+    button:hover {
+        background-color: #45a049;
+    }
+    .advice-item {
+        margin-bottom: 20px;
+        background-color: #fafafa;
+        padding: 15px;
+        border-radius: 6px;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    }
+    .advice-item h3 {
+        margin: 0;
+        color: #555;
+    }
+    .advice-item p {
+        margin: 10px 0;
+        color: #333;
+    }
+    .advice-item .meta {
+        font-size: 14px;
+        color: #777;
+    }
+    .back-button {
+        padding: 10px 20px;
+        background-color: #007bff;
+        color: white;
+        text-align: center;
+        display: inline-block;
+        border-radius: 5px;
+        text-decoration: none;
+        margin-top: 20px;
+    }
+    .back-button:hover {
+        background-color: #0056b3;
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <h1>Advice Board</h1>
+
+  <!-- Form to Submit Advice -->
+  <div class="form-container">
+    <h2>Post Your Advice</h2>
+    <form th:action="@{/advice/submit}" method="post">
+      <label for="name">Your Name:</label>
+      <input type="text" id="name" name="name" required placeholder="Enter your name" />
+
+      <label for="course">Your Course/Job:</label>
+      <input type="text" id="course" name="course" required placeholder="Enter your course/job" />
+
+      <label for="content">Your Advice:</label>
+      <textarea id="content" name="content" required placeholder="Write your advice here..."></textarea>
+
+      <button type="submit">Submit Advice</button>
+    </form>
+  </div>
+
+  <!-- Displaying the Submitted Advice -->
+  <h2>Posted Advice</h2>
+
+  <div th:each="adv : ${advices}">
+    <div class="advice-item">
+      <h3 th:text="${adv.name}"></h3>
+      <p class="meta" th:text="'Course/Job: ' + ${adv.course}"></p>
+      <p th:text="${adv.content}"></p>
+    </div>
+  </div>
+
+  <!-- Back Button -->
+  <a href="/" class="back-button">Back to Home</a>
+</div>
+
+</body>
+</html>
+
+

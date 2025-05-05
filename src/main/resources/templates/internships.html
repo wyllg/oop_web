@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Internships</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        a {
+            text-decoration: none;
+            color: blue;
+        }
+        img {
+            width: 100px;
+            height: auto;
+            display: block;
+            margin-top: 5px;
+        }
+    </style>
+</head>
+<body>
+<h1>Internships</h1>
+<table>
+    <thead>
+    <tr>
+        <th>Title</th>
+        <th>Location</th> <!-- New column for Company -->
+        <th>Description</th>
+        <th>Link</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="internship : ${internships}">
+        <td>
+            <span th:text="${internship.title}"></span>
+            <img th:src="${internship.imagePath}" alt="Internship Image" />
+        </td>
+        <td th:text="${internship.location}"></td> <!-- Displaying the location name -->
+        <td th:text="${internship.description}"></td>
+        <td><a th:href="${internship.link}" th:text="${internship.link}" target="_blank" rel="noopener"></a></td>
+    </tr>
+    </tbody>
+</table>
+</body>
+</html>
